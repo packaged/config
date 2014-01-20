@@ -1,11 +1,7 @@
 <?php
-/**
- * @author Brooke Bryan @bajbnet
- */
-
 namespace Packaged\Config\Provider\Test;
 
-use Packaged\Config\IConfigSection;
+use Packaged\Config\ConfigSectionInterface;
 
 /**
  * Class TestConfigSection
@@ -14,7 +10,7 @@ use Packaged\Config\IConfigSection;
  *
  * @package Packaged\Config\Provider\Test
  */
-class TestConfigSection implements IConfigSection
+class TestConfigSection implements ConfigSectionInterface
 {
   protected $_name;
   protected $_items;

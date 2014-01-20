@@ -6,7 +6,7 @@
 abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
 {
   /**
-   * @return \Packaged\Config\IConfigProvider
+   * @return \Packaged\Config\ConfigProviderInterface
    */
   abstract function getConfigProvider();
 
@@ -90,4 +90,3 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
     $this->assertEquals("database", $section->getName());
   }
 }
- 

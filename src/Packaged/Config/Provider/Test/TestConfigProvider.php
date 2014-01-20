@@ -1,12 +1,8 @@
 <?php
-/**
- * @author Brooke Bryan @bajbnet
- */
-
 namespace Packaged\Config\Provider\Test;
 
-use Packaged\Config\IConfigProvider;
-use Packaged\Config\IConfigSection;
+use Packaged\Config\ConfigProviderInterface;
+use Packaged\Config\ConfigSectionInterface;
 
 /**
  * Class TestConfigProvider
@@ -15,7 +11,7 @@ use Packaged\Config\IConfigSection;
  *
  * @package Packaged\Config\Provider\Test
  */
-class TestConfigProvider implements IConfigProvider
+class TestConfigProvider implements ConfigProviderInterface
 {
   protected $_sections;
 
@@ -30,7 +26,7 @@ class TestConfigProvider implements IConfigProvider
    */
   public function addItem($section, $item, $value)
   {
-    if(!($this->_sections[$section] instanceof IConfigSection))
+    if(!($this->_sections[$section] instanceof ConfigSectionInterface))
     {
       $this->_sections[$section] = new TestConfigSection($section);
     }
@@ -42,7 +38,7 @@ class TestConfigProvider implements IConfigProvider
   /**
    * Retrieve all configuration sections
    *
-   * @return IConfigSection[]
+   * @return ConfigSectionInterface[]
    */
   public function getSections()
   {
@@ -52,7 +48,7 @@ class TestConfigProvider implements IConfigProvider
   /**
    * @param string $name Name/Key of the configuration section
    *
-   * @return IConfigSection
+   * @return ConfigSectionInterface
    * @throws \Exception
    */
   public function getSection($name)

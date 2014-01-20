@@ -1,30 +1,26 @@
 <?php
-/**
- * @author Brooke Bryan @bajbnet
- */
-
 namespace Packaged\Config;
 
 /**
- * Interface IConfigProvider
+ * Interface ConfigProviderInterface
  *
  * The Configuration Provider is responsible for
  *
  * @package Packaged\Config
  */
-interface IConfigProvider
+interface ConfigProviderInterface
 {
   /**
    * Retrieve all configuration sections
    *
-   * @return IConfigSection[]
+   * @return ConfigSectionInterface[]
    */
   public function getSections();
 
   /**
    * @param string $name Name/Key of the configuration section
    *
-   * @return IConfigSection
+   * @return ConfigSectionInterface
    * @throws \Exception
    */
   public function getSection($name);

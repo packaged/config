@@ -1,12 +1,8 @@
 <?php
-/**
- * @author Brooke Bryan @bajbnet
- */
-
 namespace Packaged\Config;
 
 /**
- * Interface IConfigSection
+ * Interface ConfigSectionInterface
  *
  * Configuration storage for a specific section of your entire config
  *
@@ -14,7 +10,7 @@ namespace Packaged\Config;
  *
  * @package Packaged\Config
  */
-interface IConfigSection
+interface ConfigSectionInterface
 {
   /**
    * Get the name of the current section e.g. database
