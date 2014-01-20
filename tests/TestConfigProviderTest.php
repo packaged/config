@@ -1,8 +1,4 @@
 <?php
-/**
- * @author Brooke Bryan @bajbnet
- */
-
 class TestConfigProviderTest extends ConfigProviderBaseTest
 {
   public function getConfigProvider()
@@ -10,4 +6,3 @@ class TestConfigProviderTest extends ConfigProviderBaseTest
     return new \Packaged\Config\Provider\Test\TestConfigProvider();
   }
 }
- 

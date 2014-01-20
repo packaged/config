@@ -1,7 +1,4 @@
 <?php
-/**
- * @author Brooke Bryan @bajbnet
- */
 
 abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +16,10 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   public function testValidProvider()
   {
     $provider = $this->getConfigProvider();
-    $this->assertInstanceOf('\Packaged\Config\IConfigProvider', $provider);
+    $this->assertInstanceOf(
+      '\Packaged\Config\ConfigProviderInterface',
+      $provider
+    );
   }
 
   /**
@@ -54,7 +54,10 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
     $provider = $this->getConfigProvider();
     $provider->addItem("database", "hostname", "localhost");
     $section = $provider->getSection("database");
-    $this->assertInstanceOf('\Packaged\Config\IConfigSection', $section);
+    $this->assertInstanceOf(
+      '\Packaged\Config\ConfigSectionInterface',
+      $section
+    );
   }
 
   /**
