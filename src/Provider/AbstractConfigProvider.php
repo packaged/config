@@ -16,10 +16,11 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
    * @param mixed  $value   Config Item Value
    *
    * @return $this
+   * @throws \RuntimeException
    */
   public function addItem($section, $item, $value)
   {
-    if($this->_sections[$section] instanceof ConfigSectionInterface)
+    if(isset($this->_sections[$section]))
     {
       $this->_sections[$section]->addItem($item, $value);
     }
