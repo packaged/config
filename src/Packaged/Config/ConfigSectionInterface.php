@@ -28,4 +28,14 @@ interface ConfigSectionInterface
    * @return mixed
    */
   public function getItem($key, $default = null);
+
+  /**
+   * Add an item to the configuration section
+   *
+   * @param string $item  Config Item Key
+   * @param mixed  $value Config Item Value
+   *
+   * @return $this
+   */
+  public function addItem($item, $value);
 }

@@ -42,4 +42,15 @@ interface ConfigProviderInterface
    * @return mixed Configuration Value
    */
   public function getItem($section, $key, $default = null);
+
+  /**
+   * Add an item to the configuration
+   *
+   * @param string $section Section Name
+   * @param string $item    Config Item Key
+   * @param mixed  $value   Config Item Value
+   *
+   * @return $this
+   */
+  public function addItem($section, $item, $value);
 }
