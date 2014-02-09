@@ -5,7 +5,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   /**
    * @return \Packaged\Config\ConfigProviderInterface
    */
-  abstract function getConfigProvider();
+  abstract public function getConfigProvider();
 
   public function testCanBeLoaded()
   {
