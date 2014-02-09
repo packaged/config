@@ -30,7 +30,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
     $provider = $this->getConfigProvider();
     $return   = $provider->addItem("database", "hostname", "localhost");
     $this->assertInstanceOf(
-      '\Packaged\Config\Provider\Test\TestConfigProvider',
+      '\Packaged\Config\ConfigProviderInterface',
       $return
     );
     $this->assertEquals(
@@ -39,10 +39,10 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
     );
 
     $provider->addSection(
-      new \Packaged\Config\Provider\Test\TestConfigSection("db")
+      new \Packaged\Config\Provider\ConfigSection("db")
     );
     $this->assertInstanceOf(
-      '\Packaged\Config\Provider\Test\TestConfigProvider',
+      '\Packaged\Config\ConfigProviderInterface',
       $provider->addItem('db', 'hostname', 'localhost')
     );
     $this->assertEquals(
@@ -83,10 +83,10 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   {
     $provider = $this->getConfigProvider();
     $provider->addSection(
-      new \Packaged\Config\Provider\Test\TestConfigSection("db")
+      new \Packaged\Config\Provider\ConfigSection("db")
     );
     $provider->addSection(
-      new \Packaged\Config\Provider\Test\TestConfigSection("database")
+      new \Packaged\Config\Provider\ConfigSection("database")
     );
     $this->assertContainsOnlyInstancesOf(
       '\Packaged\Config\ConfigSectionInterface',
@@ -99,7 +99,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
    */
   public function testSectionAdd()
   {
-    $section  = new \Packaged\Config\Provider\Test\TestConfigSection("db");
+    $section  = new \Packaged\Config\Provider\ConfigSection("db");
     $provider = $this->getConfigProvider();
     $this->assertInstanceOf(
       '\Packaged\Config\ConfigProviderInterface',
@@ -147,7 +147,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
       $provider->getItem("database", "hostname", "notset")
     );
     $provider->addSection(
-      new \Packaged\Config\Provider\Test\TestConfigSection("database")
+      new \Packaged\Config\Provider\ConfigSection("database")
     );
     $section = $provider->getSection("database");
     $this->assertEquals("notset", $section->getItem("hostname", "notset"));

@@ -13,4 +13,19 @@ abstract class ConfigSectionBaseTest extends PHPUnit_Framework_TestCase
     $section->setName("testing");
     $this->assertEquals("testing", $section->getName());
   }
+
+  public function testCanAddItemAndRetrieve()
+  {
+    $section = $this->getConfigSection();
+    $section->addItem("hostname", "localhost");
+    $item = $section->getItem("hostname", "notset");
+    $this->assertEquals("localhost", $item);
+  }
+
+  public function testMissingItemReturnsDefault()
+  {
+    $section = $this->getConfigSection();
+    $item    = $section->getItem("hostname", "notset");
+    $this->assertEquals("notset", $item);
+  }
 }
