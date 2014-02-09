@@ -33,6 +33,22 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
       '\Packaged\Config\Provider\Test\TestConfigProvider',
       $return
     );
+    $this->assertEquals(
+      "localhost",
+      $provider->getItem("database", "hostname", "non")
+    );
+
+    $provider->addSection(
+      new \Packaged\Config\Provider\Test\TestConfigSection("db")
+    );
+    $this->assertInstanceOf(
+      '\Packaged\Config\Provider\Test\TestConfigProvider',
+      $provider->addItem('db', 'hostname', 'localhost')
+    );
+    $this->assertEquals(
+      "localhost",
+      $provider->getItem("db", "hostname", "non")
+    );
   }
 
   /**
@@ -63,6 +79,42 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   /**
    * @depends testValidProvider
    */
+  public function testGetSections()
+  {
+    $provider = $this->getConfigProvider();
+    $provider->addSection(
+      new \Packaged\Config\Provider\Test\TestConfigSection("db")
+    );
+    $provider->addSection(
+      new \Packaged\Config\Provider\Test\TestConfigSection("database")
+    );
+    $this->assertContainsOnlyInstancesOf(
+      '\Packaged\Config\ConfigSectionInterface',
+      $provider->getSections()
+    );
+  }
+
+  /**
+   * @depends testValidProvider
+   */
+  public function testSectionAdd()
+  {
+    $section  = new \Packaged\Config\Provider\Test\TestConfigSection("db");
+    $provider = $this->getConfigProvider();
+    $this->assertInstanceOf(
+      '\Packaged\Config\ConfigProviderInterface',
+      $provider->addSection($section)
+    );
+    $this->setExpectedException(
+      '\Exception',
+      "The section db cannot be re-added"
+    );
+    $provider->addSection($section);
+  }
+
+  /**
+   * @depends testValidProvider
+   */
   public function testSectionGetItem()
   {
     $provider = $this->getConfigProvider();
@@ -74,12 +126,42 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   /**
    * @depends testValidProvider
    */
+  public function testMissingSectionThrows()
+  {
+    $provider = $this->getConfigProvider();
+    $this->setExpectedException(
+      "Exception",
+      "Configuration section database could not be found"
+    );
+    $provider->getSection("database");
+  }
+
+  /**
+   * @depends testValidProvider
+   */
+  public function testGetMissingItem()
+  {
+    $provider = $this->getConfigProvider();
+    $this->assertEquals(
+      "notset",
+      $provider->getItem("database", "hostname", "notset")
+    );
+    $provider->addSection(
+      new \Packaged\Config\Provider\Test\TestConfigSection("database")
+    );
+    $section = $provider->getSection("database");
+    $this->assertEquals("notset", $section->getItem("hostname", "notset"));
+  }
+
+  /**
+   * @depends testValidProvider
+   */
   public function testSectionExists()
   {
     $provider = $this->getConfigProvider();
+    $this->assertFalse($provider->sectionExists("database"));
     $provider->addItem("database", "hostname", "localhost");
-    $exists = $provider->sectionExists("database");
-    $this->assertTrue($exists);
+    $this->assertTrue($provider->sectionExists("database"));
   }
 
   /**

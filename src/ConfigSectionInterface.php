@@ -20,6 +20,15 @@ interface ConfigSectionInterface
   public function getName();
 
   /**
+   * Name the current section
+   *
+   * @param string $name Name of this section
+   *
+   * @return $this
+   */
+  public function setName($name);
+
+  /**
    * Retrieve an item from the configuration
    *
    * @param string $key     Configuration item key e.g. hostname

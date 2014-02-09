@@ -26,11 +26,14 @@ class TestConfigProvider implements ConfigProviderInterface
    */
   public function addItem($section, $item, $value)
   {
-    if(!($this->_sections[$section] instanceof ConfigSectionInterface))
+    if($this->_sections[$section] instanceof ConfigSectionInterface)
     {
-      $this->_sections[$section] = new TestConfigSection($section);
+      $this->_sections[$section]->addItem($item, $value);
     }
-    $this->_sections[$section]->addItem($item, $value);
+    else
+    {
+      $this->addSection(new TestConfigSection($section, [$item => $value]));
+    }
 
     return $this;
   }
@@ -70,6 +73,25 @@ class TestConfigProvider implements ConfigProviderInterface
   public function sectionExists($name)
   {
     return isset($this->_sections[$name]);
+  }
+
+  /**
+   * @param ConfigSectionInterface $section Section container to add
+   *
+   * @return $this
+   * @throws \Exception when the section already exists
+   */
+  public function addSection(ConfigSectionInterface $section)
+  {
+    if($this->sectionExists($section->getName()))
+    {
+      throw new \Exception(
+        "The section " . $section->getName() . " cannot be re-added"
+      );
+    }
+
+    $this->_sections[$section->getName()] = $section;
+    return $this;
   }
 
   /**

@@ -26,6 +26,14 @@ interface ConfigProviderInterface
   public function getSection($name);
 
   /**
+   * @param ConfigSectionInterface $section Section container to add
+   *
+   * @return $this
+   * @throws \Exception when the section already exists
+   */
+  public function addSection(ConfigSectionInterface $section);
+
+  /**
    * Check to see if a section exists within the configuration
    *
    * @param string $name Section name

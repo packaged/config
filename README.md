@@ -9,9 +9,9 @@ General Usage
     $configProvider->addItem("database", "hostname", "tester.local");
     $configProvider->addItem("database", "username", "root");
 
-    //Retrieve the section and then pull the item specifically
-    // This method is great if you want to pass the whole section into an object to
-    // configure it
+    // Retrieve the section and then pull the item specifically
+    // This method is great if you want to pass the whole section
+    // into an object to configure it
     $section  = $configProvider->getSection("database");
     $hostname = $section->getItem("hostname", "localhost");
     echo "Located '$hostname' as the hostname from a section item get\n";
