@@ -21,5 +21,7 @@ class ConfigSectionTest extends ConfigSectionBaseTest
     $this->assertEquals('testing', $section->getItem('random'));
     unset($section['random']);
     $this->assertFalse(isset($section['random']));
+    $this->setExpectedException("Exception", "Config Item Not Found", 999);
+    $section->getItem('ghj', new Exception("Config Item Not Found", 999));
   }
 }

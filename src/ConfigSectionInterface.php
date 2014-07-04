@@ -35,6 +35,8 @@ interface ConfigSectionInterface
    * @param mixed  $default Default value if the config item does not exist
    *
    * @return mixed
+   *
+   * @throws \Exception when default is passed as an exception
    */
   public function getItem($key, $default = null);
 

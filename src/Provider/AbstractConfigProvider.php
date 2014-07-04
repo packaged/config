@@ -94,11 +94,17 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
    * @param mixed  $default Default value for missing item
    *
    * @return mixed Configuration Value
+   *
+   * @throws \Exception when default is passed as an exception
    */
   public function getItem($section, $key, $default = null)
   {
     if(!$this->sectionExists($section))
     {
+      if($default instanceof \Exception)
+      {
+        throw $default;
+      }
       return $default;
     }
     return $this->getSection($section)->getItem($key, $default);

@@ -48,6 +48,8 @@ interface ConfigProviderInterface
    * @param mixed  $default Default value for missing item
    *
    * @return mixed Configuration Value
+   *
+   * @throws \Exception when default is passed as an exception
    */
   public function getItem($section, $key, $default = null);
 

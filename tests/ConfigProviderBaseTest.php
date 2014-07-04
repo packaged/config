@@ -156,6 +156,16 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   /**
    * @depends testValidProvider
    */
+  public function testDefaultExceptionThrown()
+  {
+    $provider = $this->getConfigProvider();
+    $this->setExpectedException("Exception", "Config Item Not Found", 999);
+    $provider->getItem('', 'gone', new Exception("Config Item Not Found", 999));
+  }
+
+  /**
+   * @depends testValidProvider
+   */
   public function testSectionExists()
   {
     $provider = $this->getConfigProvider();
