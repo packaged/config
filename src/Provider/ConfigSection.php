@@ -71,6 +71,16 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
   }
 
   /**
+   * Retrieve all the items in the configuration section
+   *
+   * @return array
+   */
+  public function getItems()
+  {
+    return $this->_items;
+  }
+
+  /**
    * @param string $key   Configuration item key e.g. hostname
    * @param mixed  $value Configuration item value e.g. localhost
    *

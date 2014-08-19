@@ -6,6 +6,9 @@ use Packaged\Config\ConfigSectionInterface;
 
 abstract class AbstractConfigProvider implements ConfigProviderInterface
 {
+  /**
+   * @var ConfigSection[]
+   */
   protected $_sections;
 
   /**

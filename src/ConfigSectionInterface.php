@@ -41,6 +41,13 @@ interface ConfigSectionInterface
   public function getItem($key, $default = null);
 
   /**
+   * Retrieve all the items in the configuration section
+   *
+   * @return array
+   */
+  public function getItems();
+
+  /**
    * Add an item to the configuration section
    *
    * @param string $item  Config Item Key
