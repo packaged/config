@@ -45,6 +45,18 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
   }
 
   /**
+   * Check to see if a config item exists within the configuration
+   *
+   * @param $key
+   *
+   * @return bool
+   */
+  public function has($key)
+  {
+    return isset($this->_items[$key]);
+  }
+
+  /**
    * Retrieve an item from the configuration
    *
    * @param string $key     Configuration item key e.g. hostname
