@@ -41,6 +41,15 @@ interface ConfigSectionInterface
   public function getItem($key, $default = null);
 
   /**
+   * Check to see if a config item exists within the configuration
+   *
+   * @param $key
+   *
+   * @return bool
+   */
+  public function has($key);
+
+  /**
    * Retrieve all the items in the configuration section
    *
    * @return array

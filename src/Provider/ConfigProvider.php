@@ -6,13 +6,26 @@ class ConfigProvider extends AbstractConfigProvider
   /**
    * @param array $sections [section => [item => value]]
    */
-  public function __construct($sections)
+  public function __construct(array $sections = null)
   {
-    foreach($sections as $section => $items)
+    if($sections !== null)
     {
-      foreach($items as $item => $value)
+      foreach($sections as $section => $items)
       {
-        $this->addItem($section, $item, $value);
+        if(!is_array($items))
+        {
+          $this->addSection(
+            new ConfigSection(
+              is_scalar($items) && is_int($section) ? $items : $section
+            )
+          );
+          break;
+        }
+
+        foreach($items as $item => $value)
+        {
+          $this->addItem($section, $item, $value);
+        }
       }
     }
   }
