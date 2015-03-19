@@ -36,6 +36,45 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
   }
 
   /**
+   * Remove an item from the configuration
+   *
+   * @param $section
+   * @param $item
+   *
+   * @return $this
+   */
+  public function removeItem($section, $item)
+  {
+    if(isset($this->_sections[$section]))
+    {
+      $this->_sections[$section]->removeItem($item);
+    }
+    return $this;
+  }
+
+  /**
+   * @param string $section Section Name
+   * @param string $key     Config Item Key
+   * @param mixed  $default Default value for missing item
+   *
+   * @return mixed Configuration Value
+   *
+   * @throws \Exception when default is passed as an exception
+   */
+  public function getItem($section, $key, $default = null)
+  {
+    if(!$this->sectionExists($section))
+    {
+      if($default instanceof \Exception)
+      {
+        throw $default;
+      }
+      return $default;
+    }
+    return $this->getSection($section)->getItem($key, $default);
+  }
+
+  /**
    * Retrieve all configuration sections
    *
    * @return ConfigSectionInterface[]
@@ -63,11 +102,25 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
   /**
    * Check to see if a section exists within the configuration
    *
+   * @alias has
+   *
    * @param string $name Section name
    *
    * @return bool
    */
   public function sectionExists($name)
+  {
+    return isset($this->_sections[$name]);
+  }
+
+  /**
+   * Check to see if a section exists within the configuration
+   *
+   * @param string $name Section name
+   *
+   * @return bool
+   */
+  public function has($name)
   {
     return isset($this->_sections[$name]);
   }
@@ -92,24 +145,32 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
   }
 
   /**
-   * @param string $section Section Name
-   * @param string $key     Config Item Key
-   * @param mixed  $default Default value for missing item
+   * Remove a section from the configuration
    *
-   * @return mixed Configuration Value
+   * @param ConfigSectionInterface $section Section container to remove
    *
-   * @throws \Exception when default is passed as an exception
+   * @return $this
    */
-  public function getItem($section, $key, $default = null)
+  public function removeSection(ConfigSectionInterface $section)
   {
-    if(!$this->sectionExists($section))
+    $this->removeSectionByName($section->getName());
+    return $this;
+  }
+
+  /**
+   * Remove a section from the configuration by its name
+   *
+   * @param string $sectionName Section name to remove
+   *
+   * @return $this
+   */
+  public function removeSectionByName($sectionName)
+  {
+    if(isset($this->_sections[$sectionName]))
     {
-      if($default instanceof \Exception)
-      {
-        throw $default;
-      }
-      return $default;
+      unset($this->_sections[$sectionName]);
     }
-    return $this->getSection($section)->getItem($key, $default);
+
+    return $this;
   }
 }

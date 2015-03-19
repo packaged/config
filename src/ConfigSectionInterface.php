@@ -65,4 +65,13 @@ interface ConfigSectionInterface
    * @return $this
    */
   public function addItem($item, $value);
+
+  /**
+   * Remove a configuration item
+   *
+   * @param string $key Configuration item key e.g. hostname
+   *
+   * @return $this
+   */
+  public function removeItem($key);
 }

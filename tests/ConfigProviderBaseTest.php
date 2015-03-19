@@ -1,5 +1,7 @@
 <?php
 
+use Packaged\Config\Provider\ConfigSection;
+
 abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
 {
   /**
@@ -28,7 +30,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   public function testCanAddItem()
   {
     $provider = $this->getConfigProvider();
-    $return   = $provider->addItem("database", "hostname", "localhost");
+    $return = $provider->addItem("database", "hostname", "localhost");
     $this->assertInstanceOf(
       '\Packaged\Config\ConfigProviderInterface',
       $return
@@ -79,6 +81,18 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   /**
    * @depends testValidProvider
    */
+  public function testCanAddRemoveItem()
+  {
+    $provider = $this->getConfigProvider();
+    $provider->addItem("db", "hostname", "localhost");
+    $this->assertEquals("localhost", $provider->getItem("db", "hostname"));
+    $provider->removeItem("db", "hostname");
+    $this->assertEquals("rm", $provider->getItem("db", "hostname", 'rm'));
+  }
+
+  /**
+   * @depends testValidProvider
+   */
   public function testGetSections()
   {
     $provider = $this->getConfigProvider();
@@ -99,7 +113,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
    */
   public function testSectionAdd()
   {
-    $section  = new \Packaged\Config\Provider\ConfigSection("db");
+    $section = new \Packaged\Config\Provider\ConfigSection("db");
     $provider = $this->getConfigProvider();
     $this->assertInstanceOf(
       '\Packaged\Config\ConfigProviderInterface',
@@ -172,6 +186,16 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
     $this->assertFalse($provider->sectionExists("database"));
     $provider->addItem("database", "hostname", "localhost");
     $this->assertTrue($provider->sectionExists("database"));
+    $this->assertTrue($provider->has("database"));
+    $this->assertEquals($provider->has("xx"), $provider->sectionExists("xx"));
+
+    $provider->removeSectionByName("database");
+    $this->assertFalse($provider->sectionExists("database"));
+
+    $provider->addItem("database", "hostname", "localhost");
+    $this->assertTrue($provider->has("database"));
+    $provider->removeSection(new ConfigSection("database"));
+    $this->assertFalse($provider->sectionExists("database"));
   }
 
   /**

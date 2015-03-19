@@ -22,10 +22,21 @@ abstract class ConfigSectionBaseTest extends PHPUnit_Framework_TestCase
     $this->assertEquals("localhost", $item);
   }
 
+  public function testCanRemoveItem()
+  {
+    $section = $this->getConfigSection();
+    $section->addItem("hostname", "localhost");
+    $item = $section->getItem("hostname", "notset");
+    $this->assertEquals("localhost", $item);
+    $section->removeItem("hostname");
+    $item = $section->getItem("hostname", "notset");
+    $this->assertEquals("notset", $item);
+  }
+
   public function testMissingItemReturnsDefault()
   {
     $section = $this->getConfigSection();
-    $item    = $section->getItem("hostname", "notset");
+    $item = $section->getItem("hostname", "notset");
     $this->assertEquals("notset", $item);
   }
 }

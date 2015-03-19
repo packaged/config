@@ -17,7 +17,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
    */
   public function __construct($name = '', array $items = [])
   {
-    $this->_name  = $name;
+    $this->_name = $name;
     $this->_items = $items;
   }
 
@@ -93,6 +93,8 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
   }
 
   /**
+   * Add a new configuration item
+   *
    * @param string $key   Configuration item key e.g. hostname
    * @param mixed  $value Configuration item value e.g. localhost
    *
@@ -101,6 +103,19 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
   public function addItem($key, $value)
   {
     $this->_items[$key] = $value;
+    return $this;
+  }
+
+  /**
+   * Remove a configuration item
+   *
+   * @param string $key Configuration item key e.g. hostname
+   *
+   * @return $this
+   */
+  public function removeItem($key)
+  {
+    unset($this->_items[$key]);
     return $this;
   }
 

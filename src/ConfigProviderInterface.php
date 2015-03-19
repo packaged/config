@@ -43,6 +43,15 @@ interface ConfigProviderInterface
   public function sectionExists($name);
 
   /**
+   * Check to see if a section exists within the configuration
+   *
+   * @param string $name Section name
+   *
+   * @return bool
+   */
+  public function has($name);
+
+  /**
    * @param string $section Section Name
    * @param string $key     Config Item Key
    * @param mixed  $default Default value for missing item
@@ -63,4 +72,32 @@ interface ConfigProviderInterface
    * @return $this
    */
   public function addItem($section, $item, $value);
+
+  /**
+   * Remove an item from the configuration
+   *
+   * @param $section
+   * @param $item
+   *
+   * @return $this
+   */
+  public function removeItem($section, $item);
+
+  /**
+   * Remove a section from the configuration
+   *
+   * @param ConfigSectionInterface $section Section container to remove
+   *
+   * @return $this
+   */
+  public function removeSection(ConfigSectionInterface $section);
+
+  /**
+   * Remove a section from the configuration by its name
+   *
+   * @param string $sectionName Section name to remove
+   *
+   * @return $this
+   */
+  public function removeSectionByName($sectionName);
 }
