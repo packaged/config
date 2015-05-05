@@ -34,6 +34,15 @@ interface ConfigProviderInterface
   public function addSection(ConfigSectionInterface $section);
 
   /**
+   * Same as addSection, however, will replace an existing section if one exists
+   *
+   * @param ConfigSectionInterface $section Section container to add
+   *
+   * @return $this
+   */
+  public function setSection(ConfigSectionInterface $section);
+
+  /**
    * Check to see if a section exists within the configuration
    *
    * @param string $name Section name

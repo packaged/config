@@ -129,6 +129,20 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   /**
    * @depends testValidProvider
    */
+  public function testSectionSet()
+  {
+    $section = new \Packaged\Config\Provider\ConfigSection("db");
+    $provider = $this->getConfigProvider();
+    $this->assertInstanceOf(
+      '\Packaged\Config\ConfigProviderInterface',
+      $provider->setSection($section)
+    );
+    $provider->setSection($section);
+  }
+
+  /**
+   * @depends testValidProvider
+   */
   public function testSectionGetItem()
   {
     $provider = $this->getConfigProvider();

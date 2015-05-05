@@ -145,6 +145,19 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
   }
 
   /**
+   * Same as addSection, however, will replace an existing section if one exists
+   *
+   * @param ConfigSectionInterface $section Section container to add
+   *
+   * @return $this
+   */
+  public function setSection(ConfigSectionInterface $section)
+  {
+    $this->_sections[$section->getName()] = $section;
+    return $this;
+  }
+
+  /**
    * Remove a section from the configuration
    *
    * @param ConfigSectionInterface $section Section container to remove
