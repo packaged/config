@@ -34,7 +34,7 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
 
   public function testLoadFile()
   {
-    $file     = dirname(__DIR__) . '/testData/test.ini';
+    $file = dirname(__DIR__) . '/testData/test.ini';
     $provider = $this->getConfigProvider();
     $provider->loadFile($file);
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
@@ -42,7 +42,7 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
 
   public function testLoadFileConstruct()
   {
-    $file     = dirname(__DIR__) . '/testData/test.ini';
+    $file = dirname(__DIR__) . '/testData/test.ini';
     $provider = new \Packaged\Config\Provider\Ini\IniConfigProvider($file);
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
   }
@@ -60,7 +60,7 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
 
   public function testLoadString()
   {
-    $file     = dirname(__DIR__) . '/testData/test.ini';
+    $file = dirname(__DIR__) . '/testData/test.ini';
     $provider = $this->getConfigProvider();
     $provider->loadString(file_get_contents($file));
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
@@ -132,6 +132,8 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
   {
     putenv('TESTVAR1=constructTestValue1');
     putenv('TESTVAR2=constructTestValue2');
+    putenv('API_SERVICE_HOST=apihost');
+    putenv('API_SERVICE_PORT=8080');
 
     $file = dirname(__DIR__) . '/testData/envtest.ini';
     $provider = new \Packaged\Config\Provider\Ini\IniConfigProvider(
@@ -157,6 +159,10 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
     $this->assertEquals(
       '',
       $provider->getItem('default', 'nonexistentNoDefault')
+    );
+    $this->assertEquals(
+      'http://apihost:8080',
+      $provider->getItem('default', 'api')
     );
   }
 }

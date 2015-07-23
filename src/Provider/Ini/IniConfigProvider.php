@@ -116,7 +116,7 @@ class IniConfigProvider extends AbstractConfigProvider
   private function _parseEnvVars($iniString)
   {
     return preg_replace_callback(
-      '/{{ENV:([0-9A-Za-z]*)(:([^{}]*))?}}/',
+      '/{{ENV:([0-9A-Za-z_]*)(:([^{}]*))?}}/',
       function ($matches)
       {
         $varName = $matches[1];
