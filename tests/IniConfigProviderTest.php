@@ -65,4 +65,98 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
     $provider->loadString(file_get_contents($file));
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
   }
+
+  public function testLoadFileEnv()
+  {
+    putenv('TESTVAR1=fileTestValue1');
+    putenv('TESTVAR2=fileTestValue2');
+
+    $file = dirname(__DIR__) . '/testData/envtest.ini';
+    $provider = $this->getConfigProvider();
+    $provider->loadFile($file, true);
+
+    $this->assertEquals(
+      'fileTestValue1',
+      $provider->getItem('default', 'var1')
+    );
+    $this->assertEquals(
+      'fileTestValue2',
+      $provider->getItem('default', 'var2')
+    );
+    $this->assertEquals(
+      'fileTestValue1-fileTestValue2',
+      $provider->getItem('default', 'var1and2')
+    );
+    $this->assertEquals(
+      'defaultValue',
+      $provider->getItem('default', 'nonexistentDefault')
+    );
+    $this->assertEquals(
+      '',
+      $provider->getItem('default', 'nonexistentNoDefault')
+    );
+  }
+
+  public function testLoadStringEnv()
+  {
+    putenv('TESTVAR1=stringTestValue1');
+    putenv('TESTVAR2=stringTestValue2');
+
+    $file = dirname(__DIR__) . '/testData/envtest.ini';
+    $provider = $this->getConfigProvider();
+    $provider->loadString(file_get_contents($file), true);
+
+    $this->assertEquals(
+      'stringTestValue1',
+      $provider->getItem('default', 'var1')
+    );
+    $this->assertEquals(
+      'stringTestValue2',
+      $provider->getItem('default', 'var2')
+    );
+    $this->assertEquals(
+      'stringTestValue1-stringTestValue2',
+      $provider->getItem('default', 'var1and2')
+    );
+    $this->assertEquals(
+      'defaultValue',
+      $provider->getItem('default', 'nonexistentDefault')
+    );
+    $this->assertEquals(
+      '',
+      $provider->getItem('default', 'nonexistentNoDefault')
+    );
+  }
+
+  public function testLoadFileConstructEnv()
+  {
+    putenv('TESTVAR1=constructTestValue1');
+    putenv('TESTVAR2=constructTestValue2');
+
+    $file = dirname(__DIR__) . '/testData/envtest.ini';
+    $provider = new \Packaged\Config\Provider\Ini\IniConfigProvider(
+      $file, true
+    );
+
+    $this->assertEquals(
+      'constructTestValue1',
+      $provider->getItem('default', 'var1')
+    );
+    $this->assertEquals(
+      'constructTestValue2',
+      $provider->getItem('default', 'var2')
+    );
+    $this->assertEquals(
+      'constructTestValue1-constructTestValue2',
+      $provider->getItem('default', 'var1and2')
+    );
+    $this->assertEquals(
+      'defaultValue',
+      $provider->getItem('default', 'nonexistentDefault')
+    );
+    $this->assertEquals(
+      '',
+      $provider->getItem('default', 'nonexistentNoDefault')
+    );
+  }
 }
