@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @requires extension apcu
+ */
 class IniCachedConfigProviderTest extends ConfigProviderBaseTest
 {
   /**
