@@ -1,9 +1,7 @@
 <?php
 namespace Packaged\Config\Provider\Ini;
 
-use Packaged\Config\Provider\AbstractConfigProvider;
-
-class IniConfigProvider extends AbstractConfigProvider
+class IniConfigProvider extends AbstractIniConfigProvider
 {
   /**
    * @param null|string $file     Full path of ini file to create configuration from
@@ -65,66 +63,7 @@ class IniConfigProvider extends AbstractConfigProvider
    */
   public function loadString($iniString, $parseEnv = false)
   {
-    if($parseEnv)
-    {
-      $iniString = $this->_parseEnvVars($iniString);
-    }
-    $data = parse_ini_string($iniString, true);
-
-    if(!$data)
-    {
-      throw new \RuntimeException(
-        "The ini string passed is corrupt or invalid"
-      );
-    }
-
-    $this->_buildFromData($data);
+    $this->_loadString($iniString, $parseEnv);
     return $this;
-  }
-
-  /**
-   * Build up the configuration from the sectioned array
-   *
-   * @param array $iniData
-   */
-  protected function _buildFromData(array $iniData)
-  {
-    foreach($iniData as $section => $sectionData)
-    {
-      if(!is_array($sectionData))
-      {
-        continue;
-      }
-
-      foreach($sectionData as $item => $value)
-      {
-        $this->addItem($section, $item, $value);
-      }
-    }
-  }
-
-  /**
-   * Parse environment variable markers in a string and replace them with the
-   * variable's value.
-   * Variables are expected to be in this format: {{ENV:VARNAME:defaultValue}}
-   * The ":defaultValue" part is optional and defaults to an empty string
-   *
-   * @param string $iniString
-   *
-   * @return string
-   */
-  private function _parseEnvVars($iniString)
-  {
-    return preg_replace_callback(
-      '/{{ENV:([0-9A-Za-z_]*)(:([^{}]*))?}}/',
-      function ($matches)
-      {
-        $varName = $matches[1];
-        $default = isset($matches[3]) ? $matches[3] : '';
-        $value = getenv($varName);
-        return $value === false ? $default : $value;
-      },
-      $iniString
-    );
   }
 }
