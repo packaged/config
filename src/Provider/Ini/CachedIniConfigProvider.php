@@ -50,12 +50,15 @@ class CachedIniConfigProvider extends AbstractIniConfigProvider
       }
     }
 
-    $this->_loadString($data, $parseEnv);
-
-    if(!$wasCached)
+    if($data)
     {
-      apcu_store($dataKey, $data);
-      apcu_store($lastCheckKey, time());
+      $this->_loadString($data, $parseEnv);
+
+      if(!$wasCached)
+      {
+        apcu_store($dataKey, $data);
+        apcu_store($lastCheckKey, time());
+      }
     }
     return $this;
   }
