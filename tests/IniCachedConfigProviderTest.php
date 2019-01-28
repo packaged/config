@@ -20,12 +20,9 @@ class IniCachedConfigProviderTest extends ConfigProviderBaseTest
 
   public function testMissingLoadFile()
   {
-    $this->setExpectedException(
-      "RuntimeException",
-      "The ini string passed is corrupt or invalid"
-    );
     $provider = $this->getConfigProvider();
-    $provider->loadCached($this->_dataDir(), 'missing.file');
+    $result = $provider->loadCached($this->_dataDir(), 'missing.file');
+    $this->assertSame($provider, $result);
   }
 
   public function testInvalidLoadFile()

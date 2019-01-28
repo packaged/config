@@ -65,8 +65,7 @@ abstract class AbstractIniConfigProvider extends AbstractConfigProvider
   {
     return preg_replace_callback(
       '/{{ENV:([0-9A-Za-z_]*)(:([^{}]*))?}}/',
-      function ($matches)
-      {
+      function ($matches) {
         $varName = $matches[1];
         $default = isset($matches[3]) ? $matches[3] : '';
         $value = getenv($varName);

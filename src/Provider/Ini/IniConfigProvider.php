@@ -1,6 +1,8 @@
 <?php
 namespace Packaged\Config\Provider\Ini;
 
+use RuntimeException;
+
 class IniConfigProvider extends AbstractIniConfigProvider
 {
   /**
@@ -49,6 +51,34 @@ class IniConfigProvider extends AbstractIniConfigProvider
       $this->_buildFromData($data);
     }
 
+    return $this;
+  }
+
+  /**
+   * Add items from multiple ini files
+   *
+   * @param array $paths
+   * @param bool  $parseEnv
+   * @param bool  $throw
+   *
+   * @return $this
+   */
+  public function loadFiles(array $paths, $parseEnv = false, $throw = false)
+  {
+    foreach($paths as $path)
+    {
+      try
+      {
+        $this->loadFile($path, $parseEnv);
+      }
+      catch(RuntimeException $e)
+      {
+        if($throw)
+        {
+          throw $e;
+        }
+      }
+    }
     return $this;
   }
 

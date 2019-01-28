@@ -40,6 +40,19 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
   }
 
+  public function testLoadFiles()
+  {
+    $file = dirname(__DIR__) . '/testData/test.ini';
+    $file2 = dirname(__DIR__) . '/testData/test2.ini';
+    $provider = $this->getConfigProvider();
+    $provider->loadFiles([$file, $file2]);
+    $this->assertEquals("packaged", $provider->getItem("database", "database"));
+    $this->assertEquals("testing", $provider->getItem("database", "username"));
+    $this->assertEquals("localhost", $provider->getItem("database", "hostname"));
+    $this->assertEquals("value", $provider->getItem("default", "item"));
+    $this->assertEquals("value2", $provider->getItem("default", "item2"));
+  }
+
   public function testLoadFileConstruct()
   {
     $file = dirname(__DIR__) . '/testData/test.ini';
