@@ -68,29 +68,20 @@ class IniCachedConfigProviderTest extends ConfigProviderBaseTest
     $contents = file_get_contents(dirname(__DIR__) . '/testData/cached.ini');
     file_put_contents($tempFile, $contents);
 
-    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider(
-      [$dir], $filename, false, 3
-    );
+    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider([$dir], $filename, false, 3);
     $this->assertEquals("value2", $provider->getItem("main", "item2"));
 
     // replace the value of item2 in the temp file
-    file_put_contents(
-      $tempFile,
-      str_replace('value2', 'new_value_2', $contents)
-    );
+    file_put_contents($tempFile, str_replace('value2', 'new_value_2', $contents));
 
     // 3 seconds should not have passed yet so the value should be returned from the cache
-    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider(
-      [$dir], $filename, false, 3
-    );
+    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider([$dir], $filename, false, 3);
     $this->assertEquals("value2", $provider->getItem("main", "item2"));
 
     sleep(3);
 
     // TTL expired, should load from the file again
-    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider(
-      [$dir], $filename, false, 3
-    );
+    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider([$dir], $filename, false, 3);
     $this->assertEquals("new_value_2", $provider->getItem("main", "item2"));
 
     unlink($tempFile);

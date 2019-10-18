@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Config\Provider;
 
+use Exception;
 use Packaged\Config\ConfigProviderInterface;
 use Packaged\Config\ConfigSectionInterface;
 
@@ -72,6 +73,24 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
       return $default;
     }
     return $this->getSection($section)->getItem($key, $default);
+  }
+
+  /**
+   * @param string $section Section Name
+   * @param string $key     Config Item Key
+   *
+   * @return bool
+   */
+  public function hasItem($section, $key)
+  {
+    try
+    {
+      return $this->getSection($section)->has($key);
+    }
+    catch(Exception $e)
+    {
+      return false;
+    }
   }
 
   /**

@@ -215,6 +215,19 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   /**
    * @depends testValidProvider
    */
+  public function testHasItem()
+  {
+    $provider = $this->getConfigProvider();
+    $this->assertFalse($provider->hasItem('invalidsection', 'invaliditem'));
+    $provider->addItem("newsection", "newitem", "newvalue");
+    $this->assertFalse($provider->hasItem('newsection', 'invaliditem'));
+    $this->assertFalse($provider->hasItem('invalidsection', 'newitem'));
+    $this->assertTrue($provider->hasItem('newsection', 'newitem'));
+  }
+
+  /**
+   * @depends testValidProvider
+   */
   public function testSectionNameGet()
   {
     $provider = $this->getConfigProvider();

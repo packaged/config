@@ -72,6 +72,14 @@ interface ConfigProviderInterface
   public function getItem($section, $key, $default = null);
 
   /**
+   * @param string $section Section Name
+   * @param string $key     Config Item Key
+   *
+   * @return bool
+   */
+  public function hasItem($section, $key);
+
+  /**
    * Add an item to the configuration
    *
    * @param string $section Section Name
