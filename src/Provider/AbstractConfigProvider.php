@@ -106,14 +106,20 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
   /**
    * @param string $name Name/Key of the configuration section
    *
+   * @param bool   $throw
+   *
    * @return ConfigSectionInterface
-   * @throws \Exception
+   * @throws Exception
    */
-  public function getSection($name)
+  public function getSection($name, $throw = true)
   {
     if(isset($this->_sections[$name]))
     {
       return $this->_sections[$name];
+    }
+    if(!$throw)
+    {
+      return new ConfigSection($name);
     }
     throw new \Exception("Configuration section $name could not be found");
   }

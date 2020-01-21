@@ -5,6 +5,8 @@ class ConfigProvider extends AbstractConfigProvider
 {
   /**
    * @param array $sections [section => [item => value]]
+   *
+   * @throws \Exception
    */
   public function __construct(array $sections = null)
   {
@@ -14,11 +16,7 @@ class ConfigProvider extends AbstractConfigProvider
       {
         if(!is_array($items))
         {
-          $this->addSection(
-            new ConfigSection(
-              is_scalar($items) && is_int($section) ? $items : $section
-            )
-          );
+          $this->addSection(new ConfigSection(is_scalar($items) && is_int($section) ? $items : $section));
           break;
         }
 
