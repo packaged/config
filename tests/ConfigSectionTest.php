@@ -1,5 +1,7 @@
 <?php
 
+use Packaged\Config\Provider\ConfigSection;
+
 class ConfigSectionTest extends ConfigSectionBaseTest
 {
   /**
@@ -28,5 +30,14 @@ class ConfigSectionTest extends ConfigSectionBaseTest
 
     $this->setExpectedException("Exception", "Config Item Not Found", 999);
     $section->getItem('ghj', new Exception("Config Item Not Found", 999));
+  }
+
+  public function testAddItems()
+  {
+    $section = new ConfigSection();
+    $section->addItems(['a' => 1, 'b' => 2, 'c' => ['a', 'b', 'c']]);
+    $this->assertEquals(1, $section->getItem('a'));
+    $this->assertEquals(2, $section->getItem('b'));
+    $this->assertEquals(['a', 'b', 'c'], $section->getItem('c'));
   }
 }
