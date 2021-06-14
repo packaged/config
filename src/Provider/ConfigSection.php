@@ -107,6 +107,22 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
   }
 
   /**
+   * Add a new configuration item
+   *
+   * @param array $keyValueItems
+   *
+   * @return $this
+   */
+  public function addItems(array $keyValueItems)
+  {
+    foreach($keyValueItems as $k => $v)
+    {
+      $this->_items[$k] = $v;
+    }
+    return $this;
+  }
+
+  /**
    * Remove a configuration item
    *
    * @param string $key Configuration item key e.g. hostname
@@ -122,6 +138,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
   /**
    * (PHP 5 &gt;= 5.0.0)<br/>
    * Whether a offset exists
+   *
    * @link http://php.net/manual/en/arrayaccess.offsetexists.php
    *
    * @param mixed $offset <p>
@@ -141,6 +158,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
   /**
    * (PHP 5 &gt;= 5.0.0)<br/>
    * Offset to retrieve
+   *
    * @link http://php.net/manual/en/arrayaccess.offsetget.php
    *
    * @param mixed $offset <p>
@@ -157,6 +175,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
   /**
    * (PHP 5 &gt;= 5.0.0)<br/>
    * Offset to set
+   *
    * @link http://php.net/manual/en/arrayaccess.offsetset.php
    *
    * @param mixed $offset <p>
@@ -176,6 +195,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
   /**
    * (PHP 5 &gt;= 5.0.0)<br/>
    * Offset to unset
+   *
    * @link http://php.net/manual/en/arrayaccess.offsetunset.php
    *
    * @param mixed $offset <p>
