@@ -8,7 +8,7 @@ Configuration Package
 General Usage
 
 
-    $configProvider = new \Packaged\Config\Provider\Test\TestConfigProvider();
+    $configProvider = new \Packaged\Config\ConfigProvider();
 
     $configProvider->addItem("database", "hostname", "tester.local");
     $configProvider->addItem("database", "username", "root");
