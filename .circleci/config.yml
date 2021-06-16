@@ -61,12 +61,6 @@ jobs:
       - image: php:7.4-alpine
         environment:
           ADD_PECL: "apcu"
-  build-php80:
-    <<: *defaults
-    docker:
-      - image: php:8.0-alpine
-        environment:
-          ADD_PECL: "apcu"
 
 workflows:
   version: 2
@@ -77,4 +71,3 @@ workflows:
       - build-php72
       - build-php73
       - build-php74
-      - build-php80
