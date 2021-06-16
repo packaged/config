@@ -1,5 +1,5 @@
 <?php
-namespace Packaged\Config\Test\Providers;
+namespace Packaged\Config\Provider\Test;
 
 use Packaged\Config\Provider\AbstractConfigProvider;
 

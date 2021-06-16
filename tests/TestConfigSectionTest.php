@@ -3,7 +3,7 @@
 namespace Packaged\Config\Test;
 
 use Packaged\Config\ConfigSectionInterface;
-use Packaged\Config\Test\Providers\TestConfigSection;
+use Packaged\Config\Provider\Test\TestConfigSection;
 
 class TestConfigSectionTest extends ConfigSectionBaseTest
 {

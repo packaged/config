@@ -2,7 +2,7 @@
 
 namespace Packaged\Config\Test;
 
-use Packaged\Config\Test\Providers\TestConfigProvider;
+use Packaged\Config\Provider\Test\TestConfigProvider;
 
 class TestConfigProviderTest extends ConfigProviderBaseTest
 {
