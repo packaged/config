@@ -1,23 +1,24 @@
 <?php
 
+namespace Packaged\Config\Test;
+
+use Packaged\Config\Provider\ConfigProvider;
+
 class ConfigProviderTest extends ConfigProviderBaseTest
 {
-  /**
-   * @return \Packaged\Config\Provider\Ini\IniConfigProvider
-   */
   public function getConfigProvider()
   {
-    return new \Packaged\Config\Provider\ConfigProvider([]);
+    return new ConfigProvider([]);
   }
 
   public function testConstruct()
   {
-    $config   = [
+    $config = [
       'section1' => ['item1' => 'value1', 'item2' => 'value2'],
       'section2' => ['test1'],
-      'sectioned'
+      'sectioned',
     ];
-    $provider = new \Packaged\Config\Provider\ConfigProvider($config);
+    $provider = new ConfigProvider($config);
     $this->assertEquals('value2', $provider->getItem('section1', 'item2'));
     $this->assertEquals('value1', $provider->getItem('section1', 'item1'));
     $this->assertEquals(

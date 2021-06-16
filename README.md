@@ -3,9 +3,6 @@ Configuration Package
 
 [![Latest Stable Version](https://poser.pugx.org/packaged/config/version.png)](https://packagist.org/packages/packaged/config)
 [![Total Downloads](https://poser.pugx.org/packaged/config/d/total.png)](https://packagist.org/packages/packaged/config)
-[![Build Status](https://travis-ci.org/packaged/config.png)](https://travis-ci.org/packaged/config)
-[![Dependency Status](https://www.versioneye.com/php/packaged:config/badge.png)](https://www.versioneye.com/php/packaged:config)
-[![HHVM Status](http://hhvm.h4cc.de/badge/packaged/config.png)](http://hhvm.h4cc.de/package/packaged/config)
 [![Coverage Status](https://coveralls.io/repos/packaged/config/badge.png)](https://coveralls.io/r/packaged/config)
 
 General Usage

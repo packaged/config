@@ -1,5 +1,5 @@
 <?php
-namespace Packaged\Config\Provider\Test;
+namespace Packaged\Config\Test\Providers;
 
 use Packaged\Config\Provider\ConfigSection;
 

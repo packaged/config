@@ -1,18 +1,14 @@
 <?php
 
+namespace Packaged\Config\Test;
+
+use Packaged\Config\Provider\Ini\IniConfigProvider;
+
 class IniConfigProviderTest extends ConfigProviderBaseTest
 {
-  /**
-   * @return \Packaged\Config\Provider\Ini\IniConfigProvider
-   */
-  public function getConfigProvider()
-  {
-    return new \Packaged\Config\Provider\Ini\IniConfigProvider();
-  }
-
   public function testMissingLoadFile()
   {
-    $file = dirname(__DIR__) . '/testData/missing.file';
+    $file = __DIR__ . '/testData/missing.file';
     $this->setExpectedException(
       "RuntimeException",
       "Config file '$file' could not be found"
@@ -21,9 +17,14 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
     $provider->loadFile($file);
   }
 
+  public function getConfigProvider()
+  {
+    return new IniConfigProvider();
+  }
+
   public function testInvalidLoadFile()
   {
-    $file = dirname(__DIR__) . '/testData/useless.file';
+    $file = __DIR__ . '/testData/useless.file';
     $this->setExpectedException(
       "RuntimeException",
       "The ini file '$file' is corrupt or invalid"
@@ -34,7 +35,7 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
 
   public function testLoadFile()
   {
-    $file = dirname(__DIR__) . '/testData/test.ini';
+    $file = __DIR__ . '/testData/test.ini';
     $provider = $this->getConfigProvider();
     $provider->loadFile($file);
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
@@ -42,8 +43,8 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
 
   public function testLoadFiles()
   {
-    $file = dirname(__DIR__) . '/testData/test.ini';
-    $file2 = dirname(__DIR__) . '/testData/test2.ini';
+    $file = __DIR__ . '/testData/test.ini';
+    $file2 = __DIR__ . '/testData/test2.ini';
     $provider = $this->getConfigProvider();
     $provider->loadFiles([$file, $file2]);
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
@@ -55,14 +56,14 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
 
   public function testLoadFileConstruct()
   {
-    $file = dirname(__DIR__) . '/testData/test.ini';
-    $provider = new \Packaged\Config\Provider\Ini\IniConfigProvider($file);
+    $file = __DIR__ . '/testData/test.ini';
+    $provider = new IniConfigProvider($file);
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
   }
 
   public function testLoadCorruptString()
   {
-    $file = dirname(__DIR__) . '/testData/useless.file';
+    $file = __DIR__ . '/testData/useless.file';
     $this->setExpectedException(
       "RuntimeException",
       "The ini string passed is corrupt or invalid"
@@ -73,7 +74,7 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
 
   public function testLoadString()
   {
-    $file = dirname(__DIR__) . '/testData/test.ini';
+    $file = __DIR__ . '/testData/test.ini';
     $provider = $this->getConfigProvider();
     $provider->loadString(file_get_contents($file));
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
@@ -84,7 +85,7 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
     putenv('TESTVAR1=fileTestValue1');
     putenv('TESTVAR2=fileTestValue2');
 
-    $file = dirname(__DIR__) . '/testData/envtest.ini';
+    $file = __DIR__ . '/testData/envtest.ini';
     $provider = $this->getConfigProvider();
     $provider->loadFile($file, true);
 
@@ -115,7 +116,7 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
     putenv('TESTVAR1=stringTestValue1');
     putenv('TESTVAR2=stringTestValue2');
 
-    $file = dirname(__DIR__) . '/testData/envtest.ini';
+    $file = __DIR__ . '/testData/envtest.ini';
     $provider = $this->getConfigProvider();
     $provider->loadString(file_get_contents($file), true);
 
@@ -148,8 +149,8 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
     putenv('API_SERVICE_HOST=apihost');
     putenv('API_SERVICE_PORT=8080');
 
-    $file = dirname(__DIR__) . '/testData/envtest.ini';
-    $provider = new \Packaged\Config\Provider\Ini\IniConfigProvider(
+    $file = __DIR__ . '/testData/envtest.ini';
+    $provider = new IniConfigProvider(
       $file, true
     );
 

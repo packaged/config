@@ -1,28 +1,32 @@
 <?php
 
+namespace Packaged\Config\Test;
+
+use Packaged\Config\Provider\Ini\CachedIniConfigProvider;
+
 /**
  * @requires extension apcu
  */
 class IniCachedConfigProviderTest extends ConfigProviderBaseTest
 {
-  /**
-   * @return \Packaged\Config\Provider\Ini\CachedIniConfigProvider
-   */
-  public function getConfigProvider()
-  {
-    return new \Packaged\Config\Provider\Ini\CachedIniConfigProvider();
-  }
-
-  private function _dataDir()
-  {
-    return [dirname(__DIR__) . '/testData'];
-  }
-
   public function testMissingLoadFile()
   {
     $provider = $this->getConfigProvider();
     $result = $provider->loadCached($this->_dataDir(), 'missing.file');
     $this->assertSame($provider, $result);
+  }
+
+  /**
+   * @return CachedIniConfigProvider
+   */
+  public function getConfigProvider()
+  {
+    return new CachedIniConfigProvider();
+  }
+
+  private function _dataDir()
+  {
+    return [__DIR__ . '/testData'];
   }
 
   public function testInvalidLoadFile()
@@ -44,7 +48,7 @@ class IniCachedConfigProviderTest extends ConfigProviderBaseTest
 
   public function testLoadConstruct()
   {
-    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider(
+    $provider = new CachedIniConfigProvider(
       $this->_dataDir(), 'test.ini'
     );
     $this->assertEquals("packaged", $provider->getItem("database", "database"));
@@ -65,23 +69,21 @@ class IniCachedConfigProviderTest extends ConfigProviderBaseTest
     $tempFile = tempnam($dir, 'cached-ini');
     $filename = basename($tempFile);
     // Copy cached.ini to the temp file
-    $contents = file_get_contents(dirname(__DIR__) . '/testData/cached.ini');
+    $contents = file_get_contents(__DIR__ . '/testData/cached.ini');
     file_put_contents($tempFile, $contents);
 
-    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider([$dir], $filename, false, 3);
+    $provider = new CachedIniConfigProvider([$dir], $filename, false, 1000);
     $this->assertEquals("value2", $provider->getItem("main", "item2"));
 
     // replace the value of item2 in the temp file
     file_put_contents($tempFile, str_replace('value2', 'new_value_2', $contents));
 
     // 3 seconds should not have passed yet so the value should be returned from the cache
-    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider([$dir], $filename, false, 3);
+    $provider = new CachedIniConfigProvider([$dir], $filename, false, 1000);
     $this->assertEquals("value2", $provider->getItem("main", "item2"));
 
-    sleep(3);
-
     // TTL expired, should load from the file again
-    $provider = new \Packaged\Config\Provider\Ini\CachedIniConfigProvider([$dir], $filename, false, 3);
+    $provider = new CachedIniConfigProvider([$dir], $filename, false, 0);
     $this->assertEquals("new_value_2", $provider->getItem("main", "item2"));
 
     unlink($tempFile);

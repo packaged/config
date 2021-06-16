@@ -1,17 +1,13 @@
 <?php
 
+namespace Packaged\Config\Test;
+
+use Exception;
+use Packaged\Config\ConfigSectionInterface;
 use Packaged\Config\Provider\ConfigSection;
 
 class ConfigSectionTest extends ConfigSectionBaseTest
 {
-  /**
-   * @return \Packaged\Config\ConfigSectionInterface
-   */
-  public function getConfigSection()
-  {
-    return new \Packaged\Config\Provider\ConfigSection();
-  }
-
   public function testArrayAccess()
   {
     $section = $this->getConfigSection();
@@ -30,6 +26,14 @@ class ConfigSectionTest extends ConfigSectionBaseTest
 
     $this->setExpectedException("Exception", "Config Item Not Found", 999);
     $section->getItem('ghj', new Exception("Config Item Not Found", 999));
+  }
+
+  /**
+   * @return ConfigSectionInterface
+   */
+  public function getConfigSection()
+  {
+    return new ConfigSection();
   }
 
   public function testAddItems()

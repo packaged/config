@@ -1,19 +1,24 @@
 <?php
 
+namespace Packaged\Config\Test;
+
+use Exception;
+use Packaged\Config\ConfigProviderInterface;
 use Packaged\Config\Provider\ConfigSection;
+use PHPUnit_Framework_TestCase;
 
 abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
 {
-  /**
-   * @return \Packaged\Config\ConfigProviderInterface
-   */
-  abstract public function getConfigProvider();
-
   public function testCanBeLoaded()
   {
     $provider = $this->getConfigProvider();
     $this->assertNotNull($provider);
   }
+
+  /**
+   * @return ConfigProviderInterface
+   */
+  abstract public function getConfigProvider();
 
   public function testValidProvider()
   {
@@ -41,7 +46,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
     );
 
     $provider->addSection(
-      new \Packaged\Config\Provider\ConfigSection("db")
+      new ConfigSection("db")
     );
     $this->assertInstanceOf(
       '\Packaged\Config\ConfigProviderInterface',
@@ -97,10 +102,10 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   {
     $provider = $this->getConfigProvider();
     $provider->addSection(
-      new \Packaged\Config\Provider\ConfigSection("db")
+      new ConfigSection("db")
     );
     $provider->addSection(
-      new \Packaged\Config\Provider\ConfigSection("database")
+      new ConfigSection("database")
     );
     $this->assertContainsOnlyInstancesOf(
       '\Packaged\Config\ConfigSectionInterface',
@@ -113,7 +118,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
    */
   public function testSectionAdd()
   {
-    $section = new \Packaged\Config\Provider\ConfigSection("db");
+    $section = new ConfigSection("db");
     $provider = $this->getConfigProvider();
     $this->assertInstanceOf(
       '\Packaged\Config\ConfigProviderInterface',
@@ -131,7 +136,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
    */
   public function testSectionSet()
   {
-    $section = new \Packaged\Config\Provider\ConfigSection("db");
+    $section = new ConfigSection("db");
     $provider = $this->getConfigProvider();
     $this->assertInstanceOf(
       '\Packaged\Config\ConfigProviderInterface',
@@ -175,7 +180,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
       $provider->getItem("database", "hostname", "notset")
     );
     $provider->addSection(
-      new \Packaged\Config\Provider\ConfigSection("database")
+      new ConfigSection("database")
     );
     $section = $provider->getSection("database");
     $this->assertEquals("notset", $section->getItem("hostname", "notset"));
@@ -187,7 +192,7 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   public function testDefaultExceptionThrown()
   {
     $provider = $this->getConfigProvider();
-    $this->setExpectedException("Exception", "Config Item Not Found", 999);
+    $this->setExpectedException("\Exception", "Config Item Not Found", 999);
     $provider->getItem('', 'gone', new Exception("Config Item Not Found", 999));
   }
 

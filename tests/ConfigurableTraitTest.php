@@ -1,13 +1,18 @@
 <?php
-use Packaged\Config\Provider\ConfigSection;
-use Packaged\Config\ConfigurableTrait;
 
-class ConfigurableTraitTest extends \PHPUnit_Framework_TestCase
+namespace Packaged\Config\Test;
+
+use Packaged\Config\ConfigSectionInterface;
+use Packaged\Config\ConfigurableTrait;
+use Packaged\Config\Provider\ConfigSection;
+use PHPUnit_Framework_TestCase;
+
+class ConfigurableTraitTest extends PHPUnit_Framework_TestCase
 {
   public function testTrait()
   {
     $config = new ConfigSection('abstract', ['name' => 'test']);
-    $mock   = new MockConfigurableTrait();
+    $mock = new MockConfigurableTrait();
     $mock->configure($config);
     $this->assertSame($config, $mock->config());
   }
@@ -24,7 +29,7 @@ class MockConfigurableTrait
   use ConfigurableTrait;
 
   /**
-   * @return \Packaged\Config\ConfigSectionInterface
+   * @return ConfigSectionInterface
    */
   public function config()
   {
