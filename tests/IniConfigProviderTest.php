@@ -9,10 +9,8 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
   public function testMissingLoadFile()
   {
     $file = __DIR__ . '/testData/missing.file';
-    $this->setExpectedException(
-      "RuntimeException",
-      "Config file '$file' could not be found"
-    );
+    $this->expectException(\RuntimeException::class);
+    $this->expectExceptionMessage("Config file '$file' could not be found");
     $provider = $this->getConfigProvider();
     $provider->loadFile($file);
   }
@@ -25,10 +23,8 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
   public function testInvalidLoadFile()
   {
     $file = __DIR__ . '/testData/useless.file';
-    $this->setExpectedException(
-      "RuntimeException",
-      "The ini file '$file' is corrupt or invalid"
-    );
+    $this->expectException(\RuntimeException::class);
+    $this->expectExceptionMessage("The ini file '$file' is corrupt or invalid");
     $provider = $this->getConfigProvider();
     $provider->loadFile($file);
   }
@@ -64,10 +60,8 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
   public function testLoadCorruptString()
   {
     $file = __DIR__ . '/testData/useless.file';
-    $this->setExpectedException(
-      "RuntimeException",
-      "The ini string passed is corrupt or invalid"
-    );
+    $this->expectException(\RuntimeException::class);
+    $this->expectExceptionMessage("The ini string passed is corrupt or invalid");
     $provider = $this->getConfigProvider();
     $provider->loadString(file_get_contents($file));
   }

@@ -24,7 +24,9 @@ class ConfigSectionTest extends ConfigSectionBaseTest
     $section['c'] = 'D';
     $this->assertEquals(['a' => 'B', 'c' => 'D'], $section->getItems());
 
-    $this->setExpectedException("Exception", "Config Item Not Found", 999);
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage("Config Item Not Found");
+    $this->expectExceptionCode(999);
     $section->getItem('ghj', new Exception("Config Item Not Found", 999));
   }
 

@@ -5,9 +5,9 @@ namespace Packaged\Config\Test;
 use Packaged\Config\ConfigSectionInterface;
 use Packaged\Config\ConfigurableTrait;
 use Packaged\Config\Provider\ConfigSection;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ConfigurableTraitTest extends PHPUnit_Framework_TestCase
+class ConfigurableTraitTest extends TestCase
 {
   public function testTrait()
   {

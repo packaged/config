@@ -5,9 +5,9 @@ namespace Packaged\Config\Test;
 use Exception;
 use Packaged\Config\ConfigProviderInterface;
 use Packaged\Config\Provider\ConfigSection;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
+abstract class ConfigProviderBaseTest extends TestCase
 {
   public function testCanBeLoaded()
   {
@@ -124,10 +124,8 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
       '\Packaged\Config\ConfigProviderInterface',
       $provider->addSection($section)
     );
-    $this->setExpectedException(
-      '\Exception',
-      "The section db cannot be re-added"
-    );
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage("The section db cannot be re-added");
     $provider->addSection($section);
   }
 
@@ -162,10 +160,8 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   public function testMissingSectionThrows()
   {
     $provider = $this->getConfigProvider();
-    $this->setExpectedException(
-      "Exception",
-      "Configuration section database could not be found"
-    );
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage("Configuration section database could not be found");
     $provider->getSection("database");
   }
 
@@ -192,7 +188,9 @@ abstract class ConfigProviderBaseTest extends PHPUnit_Framework_TestCase
   public function testDefaultExceptionThrown()
   {
     $provider = $this->getConfigProvider();
-    $this->setExpectedException("\Exception", "Config Item Not Found", 999);
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage("Config Item Not Found");
+    $this->expectExceptionCode(999);
     $provider->getItem('', 'gone', new Exception("Config Item Not Found", 999));
   }
 

@@ -3,9 +3,9 @@
 namespace Packaged\Config\Test;
 
 use Packaged\Config\ConfigSectionInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-abstract class ConfigSectionBaseTest extends PHPUnit_Framework_TestCase
+abstract class ConfigSectionBaseTest extends TestCase
 {
   public function testNameSetAndGet()
   {

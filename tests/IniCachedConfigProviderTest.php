@@ -31,10 +31,8 @@ class IniCachedConfigProviderTest extends ConfigProviderBaseTest
 
   public function testInvalidLoadFile()
   {
-    $this->setExpectedException(
-      "RuntimeException",
-      "The ini string passed is corrupt or invalid"
-    );
+    $this->expectException(\RuntimeException::class);
+    $this->expectExceptionMessage("The ini string passed is corrupt or invalid");
     $provider = $this->getConfigProvider();
     $provider->loadCached($this->_dataDir(), 'useless.file');
   }
