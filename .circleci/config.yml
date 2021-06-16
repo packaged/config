@@ -35,38 +35,56 @@ jobs:
     <<: *defaults
     docker:
       - image: tomkay/docker-legacy-php:5.4-alpine
+        environment:
+          ADD_PACKAGES: "php7-apcu"
   build-php55:
     <<: *defaults
     docker:
       - image: tomkay/docker-legacy-php:5.5-alpine
+        environment:
+          ADD_PACKAGES: "php7-apcu"
   build-php56:
     <<: *defaults
     docker:
       - image: php:5.6-alpine
+        environment:
+          ADD_PACKAGES: "php7-apcu"
   build-php70:
     <<: *defaults
     docker:
       - image: php:7.0-alpine
+        environment:
+          ADD_PACKAGES: "php7-apcu"
   build-php71:
     <<: *defaults
     docker:
       - image: php:7.1-alpine
+        environment:
+          ADD_PACKAGES: "php7-apcu"
   build-php72:
     <<: *defaults
     docker:
       - image: php:7.2-alpine
+        environment:
+          ADD_PACKAGES: "php7-apcu"
   build-php73:
     <<: *defaults
     docker:
       - image: php:7.3-alpine
+        environment:
+          ADD_PACKAGES: "php7-apcu"
   build-php74:
     <<: *defaults
     docker:
       - image: php:7.4-alpine
+        environment:
+          ADD_PACKAGES: "php7-apcu"
   build-php80:
     <<: *defaults
     docker:
       - image: php:8.0-alpine
+        environment:
+          ADD_PACKAGES: "php7-apcu"
 
 workflows:
   version: 2
