@@ -15,11 +15,12 @@ trait ConfigurableTrait
    *
    * @param ConfigSectionInterface $configuration
    *
-   * @return static
+   * @return $this
    */
   public function configure(ConfigSectionInterface $configuration)
   {
     $this->_configuration = $configuration;
+    return $this;
   }
 
   /**
