@@ -25,7 +25,7 @@ defaults: &defaults
 
     # run tests
     - run: composer install -n --prefer-dist
-    - run: php vendor/phpunit/phpunit/phpunit -c phpunit.xml --log-junit /tmp/test-results/phpunit/junit.xml
+    - run: php -d apc.enable_cli=on vendor/phpunit/phpunit/phpunit -c phpunit.xml --log-junit /tmp/test-results/phpunit/junit.xml
     - store_test_results:
         path: /tmp/test-results
 
