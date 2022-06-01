@@ -1,12 +1,14 @@
 <?php
 namespace Packaged\Config\Provider;
 
+use ArrayAccess;
+use Exception;
 use Packaged\Config\ConfigSectionInterface;
 
 /**
  * Configuration section
  */
-class ConfigSection implements ConfigSectionInterface, \ArrayAccess
+class ConfigSection implements ConfigSectionInterface, ArrayAccess
 {
   protected $_name;
   protected $_items;
@@ -74,7 +76,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
     }
     else
     {
-      if($default instanceof \Exception)
+      if($default instanceof Exception)
       {
         throw $default;
       }
@@ -150,7 +152,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
    * <p>
    * The return value will be casted to boolean if non-boolean was returned.
    */
-  public function offsetExists($offset)
+  public function offsetExists($offset): bool
   {
     return isset($this->_items[$offset]);
   }
@@ -167,7 +169,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
    *
    * @return mixed Can return all value types.
    */
-  public function offsetGet($offset)
+  public function offsetGet($offset): mixed
   {
     return $this->getItem($offset);
   }
@@ -187,7 +189,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
    *
    * @return void
    */
-  public function offsetSet($offset, $value)
+  public function offsetSet($offset, $value): void
   {
     $this->addItem($offset, $value);
   }
@@ -204,7 +206,7 @@ class ConfigSection implements ConfigSectionInterface, \ArrayAccess
    *
    * @return void
    */
-  public function offsetUnset($offset)
+  public function offsetUnset($offset): void
   {
     unset($this->_items[$offset]);
   }
