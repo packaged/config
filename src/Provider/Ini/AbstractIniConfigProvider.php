@@ -2,6 +2,7 @@
 namespace Packaged\Config\Provider\Ini;
 
 use Packaged\Config\Provider\AbstractConfigProvider;
+use RuntimeException;
 
 abstract class AbstractIniConfigProvider extends AbstractConfigProvider
 {
@@ -22,7 +23,7 @@ abstract class AbstractIniConfigProvider extends AbstractConfigProvider
 
     if(!$data)
     {
-      throw new \RuntimeException(
+      throw new RuntimeException(
         "The ini string passed is corrupt or invalid"
       );
     }
@@ -67,7 +68,7 @@ abstract class AbstractIniConfigProvider extends AbstractConfigProvider
       '/{{ENV:([0-9A-Za-z_]*)(:([^{}]*))?}}/',
       function ($matches) {
         $varName = $matches[1];
-        $default = isset($matches[3]) ? $matches[3] : '';
+        $default = $matches[3] ?? '';
         $value = getenv($varName);
         return $value === false ? $default : $value;
       },

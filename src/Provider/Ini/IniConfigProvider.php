@@ -30,7 +30,7 @@ class IniConfigProvider extends AbstractIniConfigProvider
   {
     if(!file_exists($fullPath))
     {
-      throw new \RuntimeException("Config file '$fullPath' could not be found");
+      throw new RuntimeException("Config file '$fullPath' could not be found");
     }
 
     if($parseEnv)
@@ -43,9 +43,7 @@ class IniConfigProvider extends AbstractIniConfigProvider
 
       if(!$data)
       {
-        throw new \RuntimeException(
-          "The ini file '$fullPath' is corrupt or invalid"
-        );
+        throw new RuntimeException("The ini file '$fullPath' is corrupt or invalid");
       }
 
       $this->_buildFromData($data);

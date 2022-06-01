@@ -66,7 +66,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
   {
     if(!$this->sectionExists($section))
     {
-      if($default instanceof \Exception)
+      if($default instanceof Exception)
       {
         throw $default;
       }
@@ -121,7 +121,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
     {
       return new ConfigSection($name);
     }
-    throw new \Exception("Configuration section $name could not be found");
+    throw new Exception("Configuration section $name could not be found");
   }
 
   /**
@@ -160,7 +160,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
   {
     if($this->sectionExists($section->getName()))
     {
-      throw new \Exception(
+      throw new Exception(
         "The section " . $section->getName() . " cannot be re-added"
       );
     }
