@@ -76,9 +76,11 @@ class IniCachedConfigProviderTest extends ConfigProviderBaseTest
     // replace the value of item2 in the temp file
     file_put_contents($tempFile, str_replace('value2', 'new_value_2', $contents));
 
-    // 3 seconds should not have passed yet so the value should be returned from the cache
+    // 1 second should not have passed yet so the value should be returned from the cache
     $provider = new CachedIniConfigProvider([$dir], $filename, false, 1000);
     $this->assertEquals("value2", $provider->getItem("main", "item2"));
+
+    sleep(2);
 
     // TTL expired, should load from the file again
     $provider = new CachedIniConfigProvider([$dir], $filename, false, 0);

@@ -17,7 +17,7 @@ class CachedIniConfigProvider extends AbstractIniConfigProvider
     $lastCheckKey = 'CachedIniCP:' . $dirsHash . ':lastCheck:' . $filename;
     $dataKey = 'CachedIniCP:' . $dirsHash . ':data:' . $filename;
 
-    $lastCheck = (int)apcu_fetch($lastCheckKey);
+    $lastCheck = apcu_fetch($lastCheckKey);
     $data = null;
     $wasCached = true;
     if((time() - $lastCheck) < $cacheTTL)
@@ -56,8 +56,8 @@ class CachedIniConfigProvider extends AbstractIniConfigProvider
 
       if(!$wasCached)
       {
-        apcu_store($dataKey, $data);
-        apcu_store($lastCheckKey, time());
+        $x = apcu_store($dataKey, $data);
+        $y = apcu_store($lastCheckKey, time());
       }
     }
     return $this;
