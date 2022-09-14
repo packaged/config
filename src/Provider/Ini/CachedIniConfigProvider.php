@@ -3,8 +3,14 @@ namespace Packaged\Config\Provider\Ini;
 
 class CachedIniConfigProvider extends AbstractIniConfigProvider
 {
+  protected static bool $_hasApcu;
+
   public function __construct(array $directories = [], $filename = null, $parseEnv = false, $cacheTTL = 5)
   {
+    if(self::$_hasApcu === null)
+    {
+      self::$_hasApcu = function_exists('apcu_fetch');
+    }
     if($directories && $filename)
     {
       $this->loadCached($directories, $filename, $parseEnv, $cacheTTL);
@@ -17,10 +23,10 @@ class CachedIniConfigProvider extends AbstractIniConfigProvider
     $lastCheckKey = 'CachedIniCP:' . $dirsHash . ':lastCheck:' . $filename;
     $dataKey = 'CachedIniCP:' . $dirsHash . ':data:' . $filename;
 
-    $lastCheck = apcu_fetch($lastCheckKey);
+    $lastCheck = self::$_hasApcu ? apcu_fetch($lastCheckKey) : false;
     $data = null;
     $wasCached = true;
-    if((time() - $lastCheck) < $cacheTTL)
+    if(self::$_hasApcu && (time() - $lastCheck) < $cacheTTL)
     {
       // TTL not yet expired, return cached version if available
       $data = apcu_fetch($dataKey);
@@ -43,7 +49,7 @@ class CachedIniConfigProvider extends AbstractIniConfigProvider
         }
       }
 
-      if(!$data)
+      if(!$data && self::$_hasApcu)
       {
         // Failed to load from file. Try the cached version
         $data = apcu_fetch($dataKey);
@@ -54,10 +60,10 @@ class CachedIniConfigProvider extends AbstractIniConfigProvider
     {
       $this->_loadString($data, $parseEnv);
 
-      if(!$wasCached)
+      if(self::$_hasApcu && !$wasCached)
       {
-        $x = apcu_store($dataKey, $data);
-        $y = apcu_store($lastCheckKey, time());
+        apcu_store($dataKey, $data);
+        apcu_store($lastCheckKey, time());
       }
     }
     return $this;
