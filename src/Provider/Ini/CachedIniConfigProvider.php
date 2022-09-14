@@ -7,10 +7,8 @@ class CachedIniConfigProvider extends AbstractIniConfigProvider
 
   public function __construct(array $directories = [], $filename = null, $parseEnv = false, $cacheTTL = 5)
   {
-    if(self::$_hasApcu === null)
-    {
-      self::$_hasApcu = function_exists('apcu_fetch');
-    }
+    self::$_hasApcu = self::$_hasApcu ?? function_exists('apcu_fetch');
+
     if($directories && $filename)
     {
       $this->loadCached($directories, $filename, $parseEnv, $cacheTTL);
