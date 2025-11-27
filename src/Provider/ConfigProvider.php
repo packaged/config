@@ -8,7 +8,7 @@ class ConfigProvider extends AbstractConfigProvider
    *
    * @throws \Exception
    */
-  public function __construct(array $sections = null)
+  public function __construct(?array $sections = null)
   {
     if($sections !== null)
     {
