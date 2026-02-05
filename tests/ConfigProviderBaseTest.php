@@ -168,6 +168,17 @@ abstract class ConfigProviderBaseTest extends TestCase
   /**
    * @depends testValidProvider
    */
+  public function testMissingSectionNoThrow()
+  {
+    $provider = $this->getConfigProvider();
+    $section = $provider->getSection("missing", false);
+    $this->assertInstanceOf(ConfigSection::class, $section);
+    $this->assertEquals("missing", $section->getName());
+  }
+
+  /**
+   * @depends testValidProvider
+   */
   public function testGetMissingItem()
   {
     $provider = $this->getConfigProvider();

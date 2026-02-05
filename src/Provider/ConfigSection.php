@@ -169,7 +169,8 @@ class ConfigSection implements ConfigSectionInterface, ArrayAccess
    *
    * @return mixed Can return all value types.
    */
-  public function offsetGet($offset): mixed
+  #[\ReturnTypeWillChange]
+  public function offsetGet($offset)
   {
     return $this->getItem($offset);
   }
