@@ -38,7 +38,7 @@ jobs:
         run: |
           cat coverage.txt
           COVERAGE=$(grep -A3 'Summary:' coverage.txt | grep 'Lines:' | grep -oP '\d+\.\d+(?=%)')
-          THRESHOLD=98
+          THRESHOLD=100
           if (( $(echo "$COVERAGE < $THRESHOLD" | bc -l) )); then
             echo "Coverage is $COVERAGE%, below ${THRESHOLD}% threshold"
             exit 1

@@ -50,6 +50,25 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
     $this->assertEquals("value2", $provider->getItem("default", "item2"));
   }
 
+  public function testLoadFilesMissingFileSilent()
+  {
+    $file = __DIR__ . '/testData/test.ini';
+    $missing = __DIR__ . '/testData/missing.file';
+    $provider = $this->getConfigProvider();
+    $provider->loadFiles([$missing, $file]);
+    $this->assertEquals("packaged", $provider->getItem("database", "database"));
+  }
+
+  public function testLoadFilesMissingFileThrows()
+  {
+    $file = __DIR__ . '/testData/test.ini';
+    $missing = __DIR__ . '/testData/missing.file';
+    $this->expectException(\RuntimeException::class);
+    $this->expectExceptionMessage("Config file '$missing' could not be found");
+    $provider = $this->getConfigProvider();
+    $provider->loadFiles([$missing, $file], false, true);
+  }
+
   public function testLoadFileConstruct()
   {
     $file = __DIR__ . '/testData/test.ini';
