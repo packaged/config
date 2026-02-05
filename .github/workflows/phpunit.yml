@@ -26,6 +26,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: bcmath
           coverage: xdebug
+          ini-values: apc.enable_cli=1
 
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
