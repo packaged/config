@@ -30,10 +30,7 @@ class ConfigSectionTest extends ConfigSectionBaseTest
     $section->getItem('ghj', new Exception("Config Item Not Found", 999));
   }
 
-  /**
-   * @return ConfigSectionInterface
-   */
-  public function getConfigSection()
+  public function getConfigSection(): ConfigSection
   {
     return new ConfigSection();
   }
