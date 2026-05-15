@@ -5,7 +5,7 @@ class CachedIniConfigProvider extends AbstractIniConfigProvider
 {
   protected static bool $_hasApcu;
 
-  public function __construct(array $directories = [], $filename = null, $parseEnv = false, $cacheTTL = 5)
+  public function __construct(array $directories = [], ?string $filename = null, bool $parseEnv = false, int $cacheTTL = 5)
   {
     self::$_hasApcu = self::$_hasApcu ?? function_exists('apcu_fetch');
 
@@ -15,7 +15,7 @@ class CachedIniConfigProvider extends AbstractIniConfigProvider
     }
   }
 
-  public function loadCached($directories, $filename, $parseEnv = false, $cacheTTL = 5)
+  public function loadCached(array $directories, string $filename, bool $parseEnv = false, int $cacheTTL = 5): static
   {
     $dirsHash = md5(implode('|', $directories));
     $lastCheckKey = 'CachedIniCP:' . $dirsHash . ':lastCheck:' . $filename;

@@ -6,7 +6,7 @@ use Packaged\Config\Provider\ConfigProvider;
 
 class ConfigProviderTest extends ConfigProviderBaseTest
 {
-  public function getConfigProvider()
+  public function getConfigProvider(): ConfigProvider
   {
     return new ConfigProvider([]);
   }

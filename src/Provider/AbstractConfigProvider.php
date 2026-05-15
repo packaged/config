@@ -7,22 +7,11 @@ use Packaged\Config\ConfigSectionInterface;
 
 abstract class AbstractConfigProvider implements ConfigProviderInterface
 {
-  /**
-   * @var ConfigSection[]
-   */
-  protected $_sections;
+  /** @var ConfigSection[] */
+  protected array $_sections = [];
 
-  /**
-   * Add an item to the configuration
-   *
-   * @param string $section Section Name
-   * @param string $item    Config Item Key
-   * @param mixed  $value   Config Item Value
-   *
-   * @return $this
-   * @throws \RuntimeException
-   */
-  public function addItem($section, $item, $value)
+  #[\Override]
+  public function addItem(string $section, string $item, mixed $value): static
   {
     if(isset($this->_sections[$section]))
     {
@@ -36,15 +25,8 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
     return $this;
   }
 
-  /**
-   * Remove an item from the configuration
-   *
-   * @param $section
-   * @param $item
-   *
-   * @return $this
-   */
-  public function removeItem($section, $item)
+  #[\Override]
+  public function removeItem(string $section, string $item): static
   {
     if(isset($this->_sections[$section]))
     {
@@ -53,16 +35,8 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
     return $this;
   }
 
-  /**
-   * @param string $section Section Name
-   * @param string $key     Config Item Key
-   * @param mixed  $default Default value for missing item
-   *
-   * @return mixed Configuration Value
-   *
-   * @throws \Exception when default is passed as an exception
-   */
-  public function getItem($section, $key, $default = null)
+  #[\Override]
+  public function getItem(string $section, string $key, mixed $default = null): mixed
   {
     if(!$this->sectionExists($section))
     {
@@ -75,13 +49,8 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
     return $this->getSection($section)->getItem($key, $default);
   }
 
-  /**
-   * @param string $section Section Name
-   * @param string $key     Config Item Key
-   *
-   * @return bool
-   */
-  public function hasItem($section, $key)
+  #[\Override]
+  public function hasItem(string $section, string $key): bool
   {
     try
     {
@@ -94,24 +63,18 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
   }
 
   /**
-   * Retrieve all configuration sections
-   *
    * @return ConfigSectionInterface[]
    */
-  public function getSections()
+  #[\Override]
+  public function getSections(): array
   {
     return $this->_sections;
   }
 
   /**
-   * @param string $name Name/Key of the configuration section
-   *
-   * @param bool   $throw
-   *
-   * @return ConfigSectionInterface
-   * @throws Exception
+   * @throws Exception when the section does not exist and $throw is true
    */
-  public function getSection($name, $throw = true)
+  public function getSection(string $name, bool $throw = true): ConfigSectionInterface
   {
     if(isset($this->_sections[$name]))
     {
@@ -124,39 +87,20 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
     throw new Exception("Configuration section $name could not be found");
   }
 
-  /**
-   * Check to see if a section exists within the configuration
-   *
-   * @alias has
-   *
-   * @param string $name Section name
-   *
-   * @return bool
-   */
-  public function sectionExists($name)
+  #[\Override]
+  public function sectionExists(string $name): bool
   {
     return isset($this->_sections[$name]);
   }
 
-  /**
-   * Check to see if a section exists within the configuration
-   *
-   * @param string $name Section name
-   *
-   * @return bool
-   */
-  public function has($name)
+  #[\Override]
+  public function has(string $name): bool
   {
     return isset($this->_sections[$name]);
   }
 
-  /**
-   * @param ConfigSectionInterface $section Section container to add
-   *
-   * @return $this
-   * @throws \Exception when the section already exists
-   */
-  public function addSection(ConfigSectionInterface $section)
+  #[\Override]
+  public function addSection(ConfigSectionInterface $section): static
   {
     if($this->sectionExists($section->getName()))
     {
@@ -169,40 +113,22 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
     return $this;
   }
 
-  /**
-   * Same as addSection, however, will replace an existing section if one exists
-   *
-   * @param ConfigSectionInterface $section Section container to add
-   *
-   * @return $this
-   */
-  public function setSection(ConfigSectionInterface $section)
+  #[\Override]
+  public function setSection(ConfigSectionInterface $section): static
   {
     $this->_sections[$section->getName()] = $section;
     return $this;
   }
 
-  /**
-   * Remove a section from the configuration
-   *
-   * @param ConfigSectionInterface $section Section container to remove
-   *
-   * @return $this
-   */
-  public function removeSection(ConfigSectionInterface $section)
+  #[\Override]
+  public function removeSection(ConfigSectionInterface $section): static
   {
     $this->removeSectionByName($section->getName());
     return $this;
   }
 
-  /**
-   * Remove a section from the configuration by its name
-   *
-   * @param string $sectionName Section name to remove
-   *
-   * @return $this
-   */
-  public function removeSectionByName($sectionName)
+  #[\Override]
+  public function removeSectionByName(string $sectionName): static
   {
     if(isset($this->_sections[$sectionName]))
     {
