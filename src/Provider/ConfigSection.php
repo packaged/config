@@ -55,7 +55,7 @@ class ConfigSection implements ConfigSectionInterface, ArrayAccess
    */
   public function has($key)
   {
-    return isset($this->_items[$key]);
+    return isset($this->_items[$key ?? '']);
   }
 
   /**
@@ -70,6 +70,7 @@ class ConfigSection implements ConfigSectionInterface, ArrayAccess
    */
   public function getItem($key, $default = null)
   {
+    $key = $key ?? '';
     if(isset($this->_items[$key]))
     {
       return $this->_items[$key];
@@ -104,7 +105,7 @@ class ConfigSection implements ConfigSectionInterface, ArrayAccess
    */
   public function addItem($key, $value)
   {
-    $this->_items[$key] = $value;
+    $this->_items[$key ?? ''] = $value;
     return $this;
   }
 
@@ -133,7 +134,7 @@ class ConfigSection implements ConfigSectionInterface, ArrayAccess
    */
   public function removeItem($key)
   {
-    unset($this->_items[$key]);
+    unset($this->_items[$key ?? '']);
     return $this;
   }
 
@@ -154,7 +155,7 @@ class ConfigSection implements ConfigSectionInterface, ArrayAccess
    */
   public function offsetExists($offset): bool
   {
-    return isset($this->_items[$offset]);
+    return isset($this->_items[$offset ?? '']);
   }
 
   /**
@@ -209,6 +210,6 @@ class ConfigSection implements ConfigSectionInterface, ArrayAccess
    */
   public function offsetUnset($offset): void
   {
-    unset($this->_items[$offset]);
+    unset($this->_items[$offset ?? '']);
   }
 }
