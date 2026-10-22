@@ -3,5 +3,12 @@ namespace Packaged\Config;
 
 interface ConfigurableInterface
 {
-  public function configure(ConfigSectionInterface $configuration): static;
+  /**
+   * Configure the data connection
+   *
+   * @param ConfigSectionInterface $configuration
+   *
+   * @return static
+   */
+  public function configure(ConfigSectionInterface $configuration);
 }

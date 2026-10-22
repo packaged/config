@@ -9,8 +9,11 @@ abstract class AbstractIniConfigProvider extends AbstractConfigProvider
   /**
    * Load configuration from a string containing INI data and optionally parse
    * environment variable placeholders
+   *
+   * @param string $iniString
+   * @param bool   $parseEnv
    */
-  protected function _loadString(string $iniString, bool $parseEnv): void
+  protected function _loadString($iniString, $parseEnv)
   {
     if($parseEnv)
     {
@@ -28,7 +31,12 @@ abstract class AbstractIniConfigProvider extends AbstractConfigProvider
     $this->_buildFromData($data);
   }
 
-  protected function _buildFromData(array $iniData): void
+  /**
+   * Build up the configuration from the sectioned array
+   *
+   * @param array $iniData
+   */
+  protected function _buildFromData(array $iniData)
   {
     foreach($iniData as $section => $sectionData)
     {
@@ -49,12 +57,16 @@ abstract class AbstractIniConfigProvider extends AbstractConfigProvider
    * variable's value.
    * Variables are expected to be in this format: {{ENV:VARNAME:defaultValue}}
    * The ":defaultValue" part is optional and defaults to an empty string
+   *
+   * @param string $iniString
+   *
+   * @return string
    */
-  protected function _parseEnvVars(string $iniString): string
+  protected function _parseEnvVars($iniString)
   {
     return preg_replace_callback(
       '/{{ENV:([0-9A-Za-z_]*)(:([^{}]*))?}}/',
-      function(array $matches): string {
+      function ($matches) {
         $varName = $matches[1];
         $default = $matches[3] ?? '';
         $value = getenv($varName);

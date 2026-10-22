@@ -15,7 +15,7 @@ class IniConfigProviderTest extends ConfigProviderBaseTest
     $provider->loadFile($file);
   }
 
-  public function getConfigProvider(): IniConfigProvider
+  public function getConfigProvider()
   {
     return new IniConfigProvider();
   }
