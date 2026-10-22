@@ -3,7 +3,15 @@ namespace Packaged\Config\Provider\Test;
 
 use Packaged\Config\Provider\ConfigProvider;
 
-/** @deprecated Use \Packaged\Config\Provider\ConfigProvider directly */
+/**
+ * @deprecated \Packaged\Config\Provider\ConfigProvider
+ *
+ * Class TestConfigProvider
+ *
+ * Config provider for testing basics
+ *
+ * @package    Packaged\Config\Provider\Test
+ */
 class TestConfigProvider extends ConfigProvider
 {
 }

@@ -15,39 +15,106 @@ interface ConfigProviderInterface
    *
    * @return ConfigSectionInterface[]
    */
-  public function getSections(): array;
+  public function getSections();
 
   /**
-   * @throws \Exception when the section does not exist (and $throw is true)
+   * @param string $name Name/Key of the configuration section
+   *
+   * @return ConfigSectionInterface
+   * @throws \Exception
    */
-  public function getSection(string $name): ConfigSectionInterface;
+  public function getSection($name);
 
   /**
+   * @param ConfigSectionInterface $section Section container to add
+   *
+   * @return $this
    * @throws \Exception when the section already exists
    */
-  public function addSection(ConfigSectionInterface $section): static;
+  public function addSection(ConfigSectionInterface $section);
 
   /**
    * Same as addSection, however, will replace an existing section if one exists
+   *
+   * @param ConfigSectionInterface $section Section container to add
+   *
+   * @return $this
    */
-  public function setSection(ConfigSectionInterface $section): static;
-
-  public function sectionExists(string $name): bool;
-
-  public function has(string $name): bool;
+  public function setSection(ConfigSectionInterface $section);
 
   /**
-   * @throws \Exception when $default is passed as an Exception
+   * Check to see if a section exists within the configuration
+   *
+   * @param string $name Section name
+   *
+   * @return bool
    */
-  public function getItem(string $section, string $key, mixed $default = null): mixed;
+  public function sectionExists($name);
 
-  public function hasItem(string $section, string $key): bool;
+  /**
+   * Check to see if a section exists within the configuration
+   *
+   * @param string $name Section name
+   *
+   * @return bool
+   */
+  public function has($name);
 
-  public function addItem(string $section, string $item, mixed $value): static;
+  /**
+   * @param string $section Section Name
+   * @param string $key     Config Item Key
+   * @param mixed  $default Default value for missing item
+   *
+   * @return mixed Configuration Value
+   *
+   * @throws \Exception when default is passed as an exception
+   */
+  public function getItem($section, $key, $default = null);
 
-  public function removeItem(string $section, string $item): static;
+  /**
+   * @param string $section Section Name
+   * @param string $key     Config Item Key
+   *
+   * @return bool
+   */
+  public function hasItem($section, $key);
 
-  public function removeSection(ConfigSectionInterface $section): static;
+  /**
+   * Add an item to the configuration
+   *
+   * @param string $section Section Name
+   * @param string $item    Config Item Key
+   * @param mixed  $value   Config Item Value
+   *
+   * @return $this
+   */
+  public function addItem($section, $item, $value);
 
-  public function removeSectionByName(string $sectionName): static;
+  /**
+   * Remove an item from the configuration
+   *
+   * @param $section
+   * @param $item
+   *
+   * @return $this
+   */
+  public function removeItem($section, $item);
+
+  /**
+   * Remove a section from the configuration
+   *
+   * @param ConfigSectionInterface $section Section container to remove
+   *
+   * @return $this
+   */
+  public function removeSection(ConfigSectionInterface $section);
+
+  /**
+   * Remove a section from the configuration by its name
+   *
+   * @param string $sectionName Section name to remove
+   *
+   * @return $this
+   */
+  public function removeSectionByName($sectionName);
 }

@@ -5,7 +5,11 @@ use RuntimeException;
 
 class IniConfigProvider extends AbstractIniConfigProvider
 {
-  public function __construct(?string $file = null, bool $parseEnv = false)
+  /**
+   * @param null|string $file     Full path of ini file to create configuration from
+   * @param bool        $parseEnv If true then parse environment variables in the INI file
+   */
+  public function __construct($file = null, $parseEnv = false)
   {
     if($file !== null)
     {
@@ -14,9 +18,15 @@ class IniConfigProvider extends AbstractIniConfigProvider
   }
 
   /**
-   * @throws RuntimeException
+   * Add items from an ini file to the configuration
+   *
+   * @param string $fullPath full path to the ini file to load
+   * @param bool   $parseEnv If true then parse environment variables in the INI file
+   *
+   * @return $this
+   * @throws \RuntimeException
    */
-  public function loadFile(string $fullPath, bool $parseEnv = false): static
+  public function loadFile($fullPath, $parseEnv = false)
   {
     if(!file_exists($fullPath))
     {
@@ -42,7 +52,16 @@ class IniConfigProvider extends AbstractIniConfigProvider
     return $this;
   }
 
-  public function loadFiles(array $paths, bool $parseEnv = false, bool $throw = false): static
+  /**
+   * Add items from multiple ini files
+   *
+   * @param array $paths
+   * @param bool  $parseEnv
+   * @param bool  $throw
+   *
+   * @return $this
+   */
+  public function loadFiles(array $paths, $parseEnv = false, $throw = false)
   {
     foreach($paths as $path)
     {
@@ -62,9 +81,15 @@ class IniConfigProvider extends AbstractIniConfigProvider
   }
 
   /**
-   * @throws RuntimeException
+   * Add items from an ini string to the configuration
+   *
+   * @param string $iniString valid ini string
+   * @param bool   $parseEnv  If true then parse environment variables in the INI file
+   *
+   * @return $this
+   * @throws \RuntimeException
    */
-  public function loadString(string $iniString, bool $parseEnv = false): static
+  public function loadString($iniString, $parseEnv = false)
   {
     $this->_loadString($iniString, $parseEnv);
     return $this;

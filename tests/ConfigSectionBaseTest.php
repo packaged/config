@@ -14,7 +14,10 @@ abstract class ConfigSectionBaseTest extends TestCase
     $this->assertEquals("testing", $section->getName());
   }
 
-  abstract public function getConfigSection(): ConfigSectionInterface;
+  /**
+   * @return ConfigSectionInterface
+   */
+  abstract public function getConfigSection();
 
   public function testCanAddItemAndRetrieve()
   {

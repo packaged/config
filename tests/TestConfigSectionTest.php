@@ -7,7 +7,10 @@ use Packaged\Config\Provider\Test\TestConfigSection;
 
 class TestConfigSectionTest extends ConfigSectionBaseTest
 {
-  public function getConfigSection(): TestConfigSection
+  /**
+   * @return ConfigSectionInterface
+   */
+  public function getConfigSection()
   {
     return new TestConfigSection();
   }

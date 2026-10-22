@@ -3,9 +3,10 @@
 namespace Packaged\Config\Test;
 
 use Packaged\Config\Provider\Ini\CachedIniConfigProvider;
-use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
-#[RequiresPhpExtension('apcu')]
+/**
+ * @requires extension apcu
+ */
 class IniCachedConfigProviderTest extends ConfigProviderBaseTest
 {
   public function testMissingLoadFile()
@@ -15,12 +16,15 @@ class IniCachedConfigProviderTest extends ConfigProviderBaseTest
     $this->assertSame($provider, $result);
   }
 
-  public function getConfigProvider(): CachedIniConfigProvider
+  /**
+   * @return CachedIniConfigProvider
+   */
+  public function getConfigProvider()
   {
     return new CachedIniConfigProvider();
   }
 
-  private function _dataDir(): array
+  private function _dataDir()
   {
     return [__DIR__ . '/testData'];
   }
@@ -59,10 +63,6 @@ class IniCachedConfigProviderTest extends ConfigProviderBaseTest
 
   public function testCachedLoad()
   {
-    if(!ini_get('apc.enable_cli'))
-    {
-      $this->markTestSkipped('Requires apc.enable_cli=1');
-    }
     $dir = sys_get_temp_dir();
     $tempFile = tempnam($dir, 'cached-ini');
     $filename = basename($tempFile);
