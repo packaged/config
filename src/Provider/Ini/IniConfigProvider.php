@@ -28,6 +28,7 @@ class IniConfigProvider extends AbstractIniConfigProvider
    */
   public function loadFile($fullPath, $parseEnv = false)
   {
+    $fullPath = $fullPath ?? '';
     if(!file_exists($fullPath))
     {
       throw new RuntimeException("Config file '$fullPath' could not be found");

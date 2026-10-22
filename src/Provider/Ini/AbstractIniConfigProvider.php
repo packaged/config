@@ -15,6 +15,7 @@ abstract class AbstractIniConfigProvider extends AbstractConfigProvider
    */
   protected function _loadString($iniString, $parseEnv)
   {
+    $iniString = $iniString ?? '';
     if($parseEnv)
     {
       $iniString = $this->_parseEnvVars($iniString);

@@ -24,13 +24,14 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
    */
   public function addItem($section, $item, $value)
   {
+    $section = $section ?? '';
     if(isset($this->_sections[$section]))
     {
       $this->_sections[$section]->addItem($item, $value);
     }
     else
     {
-      $this->addSection(new ConfigSection($section, [$item => $value]));
+      $this->addSection(new ConfigSection($section, [$item ?? '' => $value]));
     }
 
     return $this;
@@ -46,6 +47,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
    */
   public function removeItem($section, $item)
   {
+    $section = $section ?? '';
     if(isset($this->_sections[$section]))
     {
       $this->_sections[$section]->removeItem($item);
@@ -113,6 +115,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
    */
   public function getSection($name, $throw = true)
   {
+    $name = $name ?? '';
     if(isset($this->_sections[$name]))
     {
       return $this->_sections[$name];
@@ -135,7 +138,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
    */
   public function sectionExists($name)
   {
-    return isset($this->_sections[$name]);
+    return isset($this->_sections[$name ?? '']);
   }
 
   /**
@@ -147,7 +150,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
    */
   public function has($name)
   {
-    return isset($this->_sections[$name]);
+    return isset($this->_sections[$name ?? '']);
   }
 
   /**
@@ -165,7 +168,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
       );
     }
 
-    $this->_sections[$section->getName()] = $section;
+    $this->_sections[$section->getName() ?? ''] = $section;
     return $this;
   }
 
@@ -178,7 +181,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
    */
   public function setSection(ConfigSectionInterface $section)
   {
-    $this->_sections[$section->getName()] = $section;
+    $this->_sections[$section->getName() ?? ''] = $section;
     return $this;
   }
 
@@ -204,6 +207,7 @@ abstract class AbstractConfigProvider implements ConfigProviderInterface
    */
   public function removeSectionByName($sectionName)
   {
+    $sectionName = $sectionName ?? '';
     if(isset($this->_sections[$sectionName]))
     {
       unset($this->_sections[$sectionName]);
