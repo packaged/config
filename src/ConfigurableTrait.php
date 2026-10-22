@@ -5,30 +5,15 @@ use Packaged\Config\Provider\ConfigSection;
 
 trait ConfigurableTrait
 {
-  /**
-   * @var ConfigSectionInterface
-   */
-  protected $_configuration;
+  protected ?ConfigSectionInterface $_configuration = null;
 
-  /**
-   * Configure the data connection
-   *
-   * @param ConfigSectionInterface $configuration
-   *
-   * @return $this
-   */
-  public function configure(ConfigSectionInterface $configuration)
+  public function configure(ConfigSectionInterface $configuration): static
   {
     $this->_configuration = $configuration;
     return $this;
   }
 
-  /**
-   * Retrieve the configuration
-   *
-   * @return ConfigSectionInterface
-   */
-  protected function _config()
+  protected function _config(): ConfigSectionInterface
   {
     if($this->_configuration === null)
     {

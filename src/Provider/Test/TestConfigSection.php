@@ -3,15 +3,7 @@ namespace Packaged\Config\Provider\Test;
 
 use Packaged\Config\Provider\ConfigSection;
 
-/**
- * @deprecated \Packaged\Config\Provider\ConfigSection
- *
- * Class TestConfigSection
- *
- * Configuration section
- *
- * @package    Packaged\Config\Provider\Test
- */
+/** @deprecated Use \Packaged\Config\Provider\ConfigSection directly */
 class TestConfigSection extends ConfigSection
 {
 }

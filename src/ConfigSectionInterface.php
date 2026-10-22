@@ -14,64 +14,38 @@ interface ConfigSectionInterface
 {
   /**
    * Get the name of the current section e.g. database
-   *
-   * @return string
    */
-  public function getName();
+  public function getName(): string;
 
   /**
    * Name the current section
-   *
-   * @param string $name Name of this section
-   *
-   * @return $this
    */
-  public function setName($name);
+  public function setName(string $name): static;
 
   /**
    * Retrieve an item from the configuration
    *
-   * @param string $key     Configuration item key e.g. hostname
-   * @param mixed  $default Default value if the config item does not exist
-   *
-   * @return mixed
-   *
-   * @throws \Exception when default is passed as an exception
+   * @throws \Exception when $default is passed as an Exception
    */
-  public function getItem($key, $default = null);
+  public function getItem(string $key, mixed $default = null): mixed;
 
   /**
    * Check to see if a config item exists within the configuration
-   *
-   * @param $key
-   *
-   * @return bool
    */
-  public function has($key);
+  public function has(string $key): bool;
 
   /**
    * Retrieve all the items in the configuration section
-   *
-   * @return array
    */
-  public function getItems();
+  public function getItems(): array;
 
   /**
    * Add an item to the configuration section
-   *
-   * @param string $item  Config Item Key
-   * @param mixed  $value Config Item Value
-   *
-   * @return $this
    */
-  public function addItem($item, $value);
+  public function addItem(string $item, mixed $value): static;
 
   /**
    * Remove a configuration item
-   *
-   * @param string $key Configuration item key e.g. hostname
-   *
-   * @return $this
    */
-  public function removeItem($key);
+  public function removeItem(string $key): static;
 }

@@ -5,6 +5,7 @@ namespace Packaged\Config\Test;
 use Exception;
 use Packaged\Config\ConfigProviderInterface;
 use Packaged\Config\Provider\ConfigSection;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 abstract class ConfigProviderBaseTest extends TestCase
@@ -15,10 +16,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $this->assertNotNull($provider);
   }
 
-  /**
-   * @return ConfigProviderInterface
-   */
-  abstract public function getConfigProvider();
+  abstract public function getConfigProvider(): ConfigProviderInterface;
 
   public function testValidProvider()
   {
@@ -29,9 +27,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     );
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testCanAddItem()
   {
     $provider = $this->getConfigProvider();
@@ -58,9 +54,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     );
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testCanAddItemAndRetrieve()
   {
     $provider = $this->getConfigProvider();
@@ -69,9 +63,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $this->assertEquals("localhost", $item);
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testCanAddItemAndRetrieveSection()
   {
     $provider = $this->getConfigProvider();
@@ -83,9 +75,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     );
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testCanAddRemoveItem()
   {
     $provider = $this->getConfigProvider();
@@ -95,9 +85,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $this->assertEquals("rm", $provider->getItem("db", "hostname", 'rm'));
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testGetSections()
   {
     $provider = $this->getConfigProvider();
@@ -113,9 +101,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     );
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testSectionAdd()
   {
     $section = new ConfigSection("db");
@@ -129,9 +115,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $provider->addSection($section);
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testSectionSet()
   {
     $section = new ConfigSection("db");
@@ -143,9 +127,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $provider->setSection($section);
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testSectionGetItem()
   {
     $provider = $this->getConfigProvider();
@@ -154,9 +136,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $this->assertEquals("localhost", $section->getItem("hostname", "notset"));
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testMissingSectionThrows()
   {
     $provider = $this->getConfigProvider();
@@ -165,9 +145,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $provider->getSection("database");
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testMissingSectionNoThrow()
   {
     $provider = $this->getConfigProvider();
@@ -176,9 +154,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $this->assertEquals("missing", $section->getName());
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testGetMissingItem()
   {
     $provider = $this->getConfigProvider();
@@ -193,9 +169,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $this->assertEquals("notset", $section->getItem("hostname", "notset"));
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testDefaultExceptionThrown()
   {
     $provider = $this->getConfigProvider();
@@ -205,9 +179,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $provider->getItem('', 'gone', new Exception("Config Item Not Found", 999));
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testSectionExists()
   {
     $provider = $this->getConfigProvider();
@@ -226,9 +198,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $this->assertFalse($provider->sectionExists("database"));
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testHasItem()
   {
     $provider = $this->getConfigProvider();
@@ -239,9 +209,7 @@ abstract class ConfigProviderBaseTest extends TestCase
     $this->assertTrue($provider->hasItem('newsection', 'newitem'));
   }
 
-  /**
-   * @depends testValidProvider
-   */
+  #[Depends('testValidProvider')]
   public function testSectionNameGet()
   {
     $provider = $this->getConfigProvider();

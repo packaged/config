@@ -28,10 +28,7 @@ class MockConfigurableTrait
 {
   use ConfigurableTrait;
 
-  /**
-   * @return ConfigSectionInterface
-   */
-  public function config()
+  public function config(): ConfigSectionInterface
   {
     return $this->_config();
   }
