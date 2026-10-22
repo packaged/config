@@ -81,7 +81,7 @@ class ConfigSection implements ConfigSectionInterface, ArrayAccess
   #[\Override]
   public function offsetExists(mixed $offset): bool
   {
-    return isset($this->_items[$offset]);
+    return $this->has($offset);
   }
 
   #[\Override]
@@ -99,6 +99,6 @@ class ConfigSection implements ConfigSectionInterface, ArrayAccess
   #[\Override]
   public function offsetUnset(mixed $offset): void
   {
-    unset($this->_items[$offset]);
+    $this->removeItem($offset);
   }
 }
